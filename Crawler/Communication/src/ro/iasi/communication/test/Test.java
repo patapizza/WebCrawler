@@ -45,7 +45,8 @@ public class Test {
 					});
 					assignerCommunication.startListening();
 				} catch (Exception ex) {
-					System.out.println(ex);
+					System.out.println("test server exception: " + ex + "\n");
+					ex.printStackTrace();
 				}
 			}
 		});
