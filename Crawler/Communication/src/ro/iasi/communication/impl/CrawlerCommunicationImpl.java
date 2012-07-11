@@ -11,4 +11,10 @@ public class CrawlerCommunicationImpl implements CrawlerCommunication {
 		return null;
 	}
 
+	@Override
+	public void sendLinks(LinksDTO linksDTO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
