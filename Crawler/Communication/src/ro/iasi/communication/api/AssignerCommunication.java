@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 
 public interface AssignerCommunication {
 
-	public void startListening() throws UnknownHostException, IOException;
+	public void registerListener(LinksCallback linksCallback);
+	public void startListening() throws UnknownHostException, IOException, ClassNotFoundException;
 	
 }
