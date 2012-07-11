@@ -1,3 +1,4 @@
+import java.util.Date;
 
 public class Node {
 	
@@ -19,19 +20,30 @@ public class Node {
 	/**
 	 * timestamp of the current domain
 	 */
-	private int timestamp;
+	private Date timestamp;
 	
 	/**
 	 * 
 	 */
 	private ArrayList<String> referers;
 	
-	public Node(String domain) {
+	public Node(String domain, String url) {
 		
 		this.domain = domain;
+		this.pages = new ArrayList<String>();
+		this.pages.add(url);
+		this.timestamp = new Date();
 		
 		
 		
+	}
+
+	public void updateTimestamp() {
+		timestamp = new Date();
+	}
+
+	public String getDomain() {
+		return domain;
 	}
 	
 	
