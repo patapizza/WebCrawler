@@ -1,15 +1,11 @@
 import java.util.PriorityQueue;
 
-
 public class Assigner {
 	
 	private PriorityQueue<Node> domains;
 	
-	
 	public Assigner() {
 		this.domains = new PriorityQueue<Node>();
-		
-		
 	}
 	
 	public void addLinks(String domain, ArrayList<String> links) {
@@ -31,15 +27,10 @@ public class Assigner {
 		domains.add(node);
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
 	public Node getNextDomain() {
 		Node domain = (Node) domains.peek();
 		domain.updateTimestamp();
 		return domain;
 	}
 
-	
 }

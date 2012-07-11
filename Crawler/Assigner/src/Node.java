@@ -1,30 +1,12 @@
 import java.util.Date;
+import java.util.ArrayList;
 
 public class Node {
 	
-	/**
-	 * current domain
-	 */
 	private String domain; 
-	
-	/**
-	 * pages to crawl
-	 */
 	private ArrayList<String> pages;
-	
-	/**
-	 * number of references from referers
-	 */
 	private int referenceCounter;
-	
-	/**
-	 * timestamp of the current domain
-	 */
 	private Date timestamp;
-
-	/**
-	 * 
-	 */
 	private ArrayList<String> referers;
 
 	public Node(String domain, String url) {
@@ -59,6 +41,5 @@ public class Node {
 		referers.add(referer);
 		++referenceCounter;
 	}
-	
 	
 }
