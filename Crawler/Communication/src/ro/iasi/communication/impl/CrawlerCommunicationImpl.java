@@ -20,8 +20,11 @@ public class CrawlerCommunicationImpl implements CrawlerCommunication {
 
 	@Override
 	public LinksDTO getLinks() throws UnknownHostException, IOException, ClassNotFoundException {
-		Socket socket = createSocketForOperation(Operation.GET);
+		Socket socket = createSocket();
 
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		objectOutputStream.writeObject(Operation.GET);
+		
 		ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 		LinksDTO linksDTO = (LinksDTO) objectInputStream.readObject();
 
@@ -33,22 +36,20 @@ public class CrawlerCommunicationImpl implements CrawlerCommunication {
 
 	@Override
 	public void sendLinks(LinksDTO linksDTO) throws UnknownHostException, IOException {
-		Socket socket = createSocketForOperation(Operation.SEND);
+		Socket socket = createSocket();
 
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		objectOutputStream.writeObject(Operation.SEND);
 		objectOutputStream.writeObject(linksDTO);
 
 		objectOutputStream.close();
 		socket.close();
 	}
 
-	private Socket createSocketForOperation(Operation operation) throws UnknownHostException, IOException {
+	private Socket createSocket() throws UnknownHostException, IOException {
 		Socket socket = new Socket();
 		socket.connect(new InetSocketAddress(InetAddress.getByName(CrawlerCommunicationImpl.IP), CrawlerCommunicationImpl.PORT),
 				CrawlerCommunicationImpl.CONNECTION_TIMEOUT);
-
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-		objectOutputStream.writeObject(operation);
 
 		return socket;
 	}
