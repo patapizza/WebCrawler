@@ -19,7 +19,7 @@ import ro.iasi.communication.impl.CrawlerCommunicationImpl;
  */
 public class Test {
 
-	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException {
+	public static void main(String[] args) throws UnknownHostException, ClassNotFoundException, IOException, InterruptedException {
 		// server side
 		Thread assigner = new Thread(new Runnable() {
 			
@@ -52,9 +52,20 @@ public class Test {
 		});
 		assigner.start();
 		
-		// client side
+		// client side test 1
 		CrawlerCommunication crawlerCommunication = new CrawlerCommunicationImpl();
 		System.out.println(crawlerCommunication.getLinks());
+		
+		// client side test 2
+		LinksDTO linksDTO = new LinksDTO();
+		linksDTO.setUrlRoot("google.ro");
+		linksDTO.getUrls().add("google.ro/aaa");
+		linksDTO.getUrls().add("google.ro/bbb");
+		
+		crawlerCommunication.sendLinks(linksDTO);
+		
+		Thread.sleep(10000);
+		System.exit(0);
 	}
 
 }
