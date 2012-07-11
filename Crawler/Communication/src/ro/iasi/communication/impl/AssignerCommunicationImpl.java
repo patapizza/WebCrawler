@@ -16,7 +16,7 @@ import ro.iasi.communication.enums.Operation;
 
 public class AssignerCommunicationImpl implements AssignerCommunication {
 	
-	public static final int PORT = 6666;
+	public static final int PORT = 6668;
 	
 	private ServerSocket serverSocket;
 	private LinksCallback listener;
@@ -27,8 +27,9 @@ public class AssignerCommunicationImpl implements AssignerCommunication {
 
 	@Override
 	public void startListening() throws UnknownHostException, IOException, ClassNotFoundException {
+		serverSocket.bind(new InetSocketAddress(InetAddress.getByName("0.0.0.0"), AssignerCommunicationImpl.PORT));
+		
 		while (true) {
-			serverSocket.bind(new InetSocketAddress(InetAddress.getByName("0.0.0.0"), AssignerCommunicationImpl.PORT));
 			Socket socket = serverSocket.accept();
 			
 			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
