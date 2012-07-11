@@ -16,7 +16,7 @@ import ro.iasi.communication.enums.Operation;
 
 public class AssignerCommunicationImpl implements AssignerCommunication {
 	
-	public static final int PORT = 6666;
+	public static final int PORT = 6668;
 	
 	private ServerSocket serverSocket;
 	private LinksCallback listener;
