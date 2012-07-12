@@ -19,6 +19,7 @@ package edu.uci.ics.crawler4j.crawler;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,20 +39,7 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import edu.uci.ics.crawler4j.url.URLCanonicalizer;
 import edu.uci.ics.crawler4j.url.WebURL;
 import edu.uci.ics.crawler4j.util.IO;
-<<<<<<< HEAD
-import org.apache.log4j.Logger;
 
-import ro.iasi.communication.api.CrawlerCommunication;
-import ro.iasi.communication.impl.CrawlerCommunicationImpl;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-=======
->>>>>>> 45ec300bdd2fbc609619f2d472add8c8df60054d
 
 /**
  * The controller that manages a crawling session. This class creates the
