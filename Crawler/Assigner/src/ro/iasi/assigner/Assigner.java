@@ -4,11 +4,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import ro.iasi.communication.api.AssignerCommunication;
 import ro.iasi.communication.api.LinksCallback;
 import ro.iasi.communication.api.LinksDTO;
 
@@ -16,7 +16,7 @@ public class Assigner implements LinksCallback {
 
 	private Queue<Node> domains;
 
-	public Assigner() {
+	public Assigner() throws URISyntaxException {
 		this.domains = new PriorityQueue<Node>(1000, new Comparator<Node>() {
 			@Override
 			public int compare(Node n1, Node n2) {
@@ -25,6 +25,9 @@ public class Assigner implements LinksCallback {
 			}
 
 		});
+		String str = "http://192.168.243.80/riw";
+		List<String> l=new LinkedList<String>();
+		this.addLinks(getDomain(str), l);
 	}
 
 	public void addLinks(String domain, List<String> links)
@@ -56,10 +59,10 @@ public class Assigner implements LinksCallback {
 	}
 
 	public Node getNextDomain() {
-		Date now = new Date(System.currentTimeMillis() - 3600);
+		Date now = new Date(System.currentTimeMillis() - 3600000);
 		Node domain = null;
 		for (Node d : domains)
-			if (domain.getTimestamp().after(now)) {
+			if (d.getTimestamp().after(now)) {
 				domain = d;
 				break;
 			}

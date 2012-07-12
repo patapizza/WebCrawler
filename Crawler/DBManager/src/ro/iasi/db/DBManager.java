@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import sun.awt.windows.ThemeReader;
 import sun.font.EAttribute;
 
 public class DBManager {
@@ -36,7 +37,7 @@ public class DBManager {
 			}
 			rs.close();
 		} catch (SQLException e) {
-			raiseSQLExecutionError();
+			raiseSQLExecutionError(e);
 		}
 
 		return result;
@@ -48,15 +49,15 @@ public class DBManager {
 		preparedStatement.setString(1, domain);
 		preparedStatement.setString(2, url);
 		preparedStatement.executeUpdate();
-		
+
 		int result = -1;
-		
+
 		ResultSet resultSet = preparedStatement.getGeneratedKeys();
 		while (resultSet.next()) {
 			result = resultSet.getInt(1);
 		}
 		resultSet.close();
-		
+
 		return result;
 	}
 
@@ -87,8 +88,8 @@ public class DBManager {
 
 	public void connect() {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:test.db");
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://192.168.243.85/webcrawler?user=root&password=student");
 
 			// TODO created by script
 			// createTables();
@@ -96,12 +97,13 @@ public class DBManager {
 			System.err.println("Could not find database driver");
 			System.exit(-1);
 		} catch (SQLException e) {
-			raiseSQLExecutionError();
+			raiseSQLExecutionError(e);
 		}
 	}
 
-	private void raiseSQLExecutionError() {
+	private void raiseSQLExecutionError(Exception ex) {
 		System.err.println("SQL execution problem");
+		ex.printStackTrace();
 		System.exit(-1);
 	}
 
