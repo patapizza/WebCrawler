@@ -35,6 +35,7 @@ import ro.iasi.communication.impl.CrawlerCommunicationImpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -244,7 +245,8 @@ public class CrawlController extends Configurable {
 									// TODO fetch links
 									getNextUrls();
 									for(String url:linksToProcess){
-										addSeed(url);
+										URL u = new URL("http", url, "");
+										addSeed(u.toString());
 									}
 									// Make sure again that none of the threads
 									// are

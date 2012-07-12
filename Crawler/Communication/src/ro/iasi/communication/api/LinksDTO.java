@@ -7,17 +7,26 @@ import java.util.List;
 public class LinksDTO implements Serializable {
 
 	private static final long serialVersionUID = -5291716690774991189L;
-	
+
 	private String urlRoot;
 	private List<String> urls = new ArrayList<>();
-	
+
+	public LinksDTO(List<String> l) {
+		this.urls = l;
+	}
+
+	public LinksDTO() {
+		this.urls = null;
+	}
+
 	public String getUrlRoot() {
 		return urlRoot;
 	}
+
 	public void setUrlRoot(String urlRoot) {
 		this.urlRoot = urlRoot;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -26,7 +35,7 @@ public class LinksDTO implements Serializable {
 		result = prime * result + ((urls == null) ? 0 : urls.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -48,15 +57,16 @@ public class LinksDTO implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "LinksDTO [urlRoot=" + urlRoot + ", urls=" + urls + "]";
 	}
-	
+
 	public List<String> getUrls() {
 		return urls;
 	}
+
 	public void setUrls(List<String> urls) {
 		this.urls = urls;
 	}
