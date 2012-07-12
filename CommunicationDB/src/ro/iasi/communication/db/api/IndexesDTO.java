@@ -2,6 +2,7 @@ package ro.iasi.communication.db.api;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class IndexesDTO implements Serializable {
@@ -9,13 +10,13 @@ public class IndexesDTO implements Serializable {
 	private static final long serialVersionUID = 1801705311856265636L;
 	
 	// string, string, int -> domain, url, wordId
-	Map<String, Map<String, Integer>> indexes = new LinkedHashMap<>();
+	Map<String, Map<String, List<Integer>>> indexes = new LinkedHashMap<>();
 
-	public Map<String, Map<String, Integer>> getIndexes() {
+	public Map<String, Map<String, List<Integer>>> getIndexes() {
 		return indexes;
 	}
 
-	public void setIndexes(Map<String, Map<String, Integer>> indexes) {
+	public void setIndexes(Map<String, Map<String, List<Integer>>> indexes) {
 		this.indexes = indexes;
 	}
 
