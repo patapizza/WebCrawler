@@ -1,9 +1,13 @@
 package ro.iasi.crawler;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import ro.iasi.communication.api.CrawlerCommunication;
+import ro.iasi.communication.api.LinksDTO;
 import ro.iasi.communication.impl.CrawlerCommunicationImpl;
 
 import edu.uci.ics.crawler4j.crawler.Page;
@@ -44,7 +48,16 @@ public class MyCrawler extends WebCrawler {
                     String text = htmlParseData.getText();
                     String html = htmlParseData.getHtml();
                     List<WebURL> links = htmlParseData.getOutgoingUrls();
-                    //List<>
+                    List<String> stringLinks = new LinkedList<>();
+                    for(WebURL u:links){
+                    	stringLinks.add(u.toString());
+                    }
+                    try {
+						communicationInterface.sendLinks(new LinksDTO(stringLinks));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
                     System.out.println("Text length: " + text.length());
                     System.out.println("Html length: " + html.length());
