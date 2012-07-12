@@ -44,7 +44,7 @@ public class MyCrawler extends WebCrawler {
                     String text = htmlParseData.getText();
                     String html = htmlParseData.getHtml();
                     List<WebURL> links = htmlParseData.getOutgoingUrls();
-                    List<>
+                    //List<>
 
                     System.out.println("Text length: " + text.length());
                     System.out.println("Html length: " + html.length());
