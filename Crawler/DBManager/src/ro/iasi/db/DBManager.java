@@ -64,10 +64,10 @@ public class DBManager {
 		PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO relations (doc_id, word_id) VALUES (?, ?)");
 		preparedStatement.setInt(1, docId);
 		preparedStatement.setInt(2, wordId);
-		preparedStatement.execute();
+		preparedStatement.executeUpdate();
 	}
 
-	public void storeIndexes(Map<String, Map<String, List<Integer>>> indexes) {
+	public void storeIndexes(Map<String, Map<String, List<Integer>>> indexes) throws SQLException {
 		connection.setAutoCommit(false);
 
 		for (Entry<String, Map<String, List<Integer>>> domainEntry : indexes.entrySet()) {
@@ -79,30 +79,10 @@ public class DBManager {
 				int docId = storeDocument(domain, url);
 
 				for (Integer wordId : urlEntry.getValue()) {
-					store
+					storeRelation(docId, wordId);
 				}
 			}
 		}
-
-		connection.commit();
-		connection.setAutoCommit(true);
-
-		PreparedStatement prep = conn.prepareStatement("insert into people values (?, ?);");
-
-		prep.setString(1, "Gandhi");
-		prep.setString(2, "politics");
-		prep.addBatch();
-		prep.setString(1, "Turing");
-		prep.setString(2, "computers");
-		prep.addBatch();
-		prep.setString(1, "Wittgenstein");
-		prep.setString(2, "smartypants");
-		prep.addBatch();
-
-		conn.setAutoCommit(false);
-		prep.executeBatch();
-		conn.setAutoCommit(true);
-
 	}
 
 	public void connect() {
