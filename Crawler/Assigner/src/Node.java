@@ -1,20 +1,19 @@
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Node {
 	
 	private String domain; 
-	private ArrayList<String> pages;
-	private int referenceCounter;
+	private List<String> pages;
 	private Date timestamp;
-	private ArrayList<String> referers;
+	private List<String> referers;
 
 	public Node(String domain, String url) {
 		this.domain = domain;
 		this.pages = new ArrayList<String>();
 		this.pages.add(url);
 		this.referers = new ArrayList<String>();
-		this.referenceCounter = 0;
 		this.timestamp = new Date();
 	}
 
@@ -26,8 +25,12 @@ public class Node {
 		return domain;
 	}
 
-	public boolean hasPage(String url) {
-		return pages.contains(url);
+	public List<String> getReferers() {
+		return referers;
+	}
+
+	public Data getTimestamp() {
+		return timestamp;
 	}
 
 	public void addPage(String url) {
@@ -39,7 +42,6 @@ public class Node {
 		if (referers.contains(referer))
 			return;
 		referers.add(referer);
-		++referenceCounter;
 	}
 	
 }
