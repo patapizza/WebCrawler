@@ -1,14 +1,9 @@
 package ro.iasi.assigner;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import ro.iasi.communication.api.AssignerCommunication;
-import ro.iasi.communication.api.CrawlerCommunication;
-import ro.iasi.communication.api.LinksCallback;
-import ro.iasi.communication.api.LinksDTO;
 import ro.iasi.communication.impl.AssignerCommunicationImpl;
-import ro.iasi.communication.impl.CrawlerCommunicationImpl;
 
 public class AssignerMain {
 
