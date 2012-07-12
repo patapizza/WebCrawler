@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="src" path="/CommunicationDB"/>
+	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.21-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
