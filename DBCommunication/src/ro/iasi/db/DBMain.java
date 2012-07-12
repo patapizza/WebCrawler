@@ -13,7 +13,7 @@ public class DBMain {
 	public static final int PORT = 8889;
 
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
-		DBManager dbManager = new DBManager();
+		final DBManager dbManager = new DBManager();
 		dbManager.connect();
 
 		DBServerCommunication dbServerCommunication = new DBServerCommunicationImpl();
@@ -27,8 +27,7 @@ public class DBMain {
 			
 			@Override
 			public Map<String, Integer> getDictionary() {
-				// TODO Auto-generated method stub
-				return null;
+				return dbManager.getDictionary();
 			}
 		});
 		
