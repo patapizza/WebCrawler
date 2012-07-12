@@ -1,4 +1,4 @@
-package ro.iasi.communication.db;
+package ro.iasi.db;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
