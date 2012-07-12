@@ -21,7 +21,7 @@ public class DBMain {
 			
 			@Override
 			public void pushIndexes(IndexesDTO indexesDTO) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
