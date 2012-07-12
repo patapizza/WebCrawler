@@ -1,5 +1,6 @@
 package ro.iasi.communication.api;
 
+
 public interface LinksCallback {
 
 	public LinksDTO getLinks();
