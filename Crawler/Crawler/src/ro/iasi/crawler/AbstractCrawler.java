@@ -28,8 +28,7 @@ public abstract class AbstractCrawler extends WebCrawler {
 	@Override
 	public boolean shouldVisit(WebURL url) {
 		String href = url.getURL().toLowerCase();
-		return !FILTERS.matcher(href).matches()
-				&& href.startsWith("http://www.ics.uci.edu/");
+		return !FILTERS.matcher(href).matches();
 	}
 
 	protected String getNextUrl() throws UnknownHostException,

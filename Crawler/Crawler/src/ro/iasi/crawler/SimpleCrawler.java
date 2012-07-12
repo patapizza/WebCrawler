@@ -18,7 +18,7 @@ public class SimpleCrawler extends AbstractCrawler {
 		 * numberOfCrawlers shows the number of concurrent threads that should
 		 * be initiated for crawling.
 		 */
-		int numberOfCrawlers = 1;
+		int numberOfCrawlers = 10;
 
 		CrawlConfig config = new CrawlConfig();
 
@@ -34,13 +34,13 @@ public class SimpleCrawler extends AbstractCrawler {
 		 * You can set the maximum crawl depth here. The default value is -1 for
 		 * unlimited depth
 		 */
-		config.setMaxDepthOfCrawling(1);
+		config.setMaxDepthOfCrawling(2);
 
 		/*
 		 * You can set the maximum number of pages to crawl. The default value
 		 * is -1 for unlimited number of pages
 		 */
-		// config.setMaxPagesToFetch(1000);
+		config.setMaxPagesToFetch(1000);
 
 		/*
 		 * Do you need to set a proxy? If so, you can use:
@@ -60,7 +60,7 @@ public class SimpleCrawler extends AbstractCrawler {
 		 * want to start a fresh crawl, you need to delete the contents of
 		 * rootFolder manually.
 		 */
-		config.setResumableCrawling(false);
+		config.setResumableCrawling(true);
 
 		/*
 		 * Instantiate the controller for this crawl.
