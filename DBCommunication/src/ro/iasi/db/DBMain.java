@@ -1,40 +1,37 @@
 package ro.iasi.db;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.Map;
+
+import ro.iasi.communication.db.api.DBCallback;
+import ro.iasi.communication.db.api.DBServerCommunication;
+import ro.iasi.communication.db.api.IndexesDTO;
+import ro.iasi.communication.db.impl.DBServerCommunicationImpl;
 
 public class DBMain {
-	
+
 	public static final int PORT = 8889;
 
-	public static void main(String[] args) throws IOException {
-		DBManager dbManager = new DBManager();
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		final DBManager dbManager = new DBManager();
 		dbManager.connect();
+
+		DBServerCommunication dbServerCommunication = new DBServerCommunicationImpl();
+		dbServerCommunication.registerListener(new DBCallback() {
+			
+			@Override
+			public void pushIndexes(IndexesDTO indexesDTO) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public Map<String, Integer> getDictionary() {
+				return dbManager.getDictionary();
+			}
+		});
 		
-		ServerSocket serverSocket = new ServerSocket();
-		serverSocket.bind(new InetSocketAddress(InetAddress.getByName("0.0.0.0"), DBMain.PORT));
-
-		while (true) {
-			Socket socket = serverSocket.accept();
-
-			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-//			Operation operation = (Operation) objectInputStream.readObject();
-//
-//			if (operation == Operation.SEND) {
-//				listener.sendLinks((LinksDTO) objectInputStream.readObject());
-//			} else if (operation == Operation.GET) {
-//				ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-//				objectOutputStream.writeObject(listener.getLinks());
-//				objectOutputStream.close();
-//			}
-//
-//			objectInputStream.close();
-			socket.close();
-		}
+		dbServerCommunication.startListening();
 	}
 
 }

@@ -2,8 +2,11 @@ package ro.iasi.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class DBManager {
 
@@ -17,18 +20,41 @@ public class DBManager {
 				+ "FOREIGN KEY (WordID) REFERENCES Words(ID), FOREIGN KEY (DocID) REFERENCES Documents(ID))");
 	}
 
+	public Map<String, Integer> getDictionary() {
+		Map<String, Integer> result = new LinkedHashMap<>();
+		
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT id, value FROM words");
+			while (rs.next()) {
+				result.put(rs.getString("value"), rs.getInt("id"));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			raiseSQLExecutionError();
+		}
+
+		return result;
+	}
+
 	public void connect() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:test.db");
-			createTables();
+			
+			// TODO created by script
+			//createTables();
 		} catch (ClassNotFoundException ex) {
 			System.err.println("Could not find database driver");
 			System.exit(-1);
 		} catch (SQLException e) {
-			System.err.println("SQL execution problem");
-			System.exit(-1);
+			raiseSQLExecutionError();
 		}
+	}
+	
+	private void raiseSQLExecutionError() {
+		System.err.println("SQL execution problem");
+		System.exit(-1);
 	}
 
 }

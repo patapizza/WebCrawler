@@ -1,0 +1,38 @@
+Algorithm VSMranking
+----------------------------------------------------------------------
+IN:  - keywords : list of keywords in the query
+     - docs : list of all the available documents _doc_ , each
+                 represented by a domainname, an URL and a the list of
+                 all the words present in that document (together with
+                 their tf term frequency)
+     - matches : set {d:d IN docs AND isMatching(d)}
+     - voc : the vocabulary set
+OUT: - results : an list of tuples [doc,sim] , sim being the similarity
+----------------------------------------------------------------------
+CREATE LIST results[SIZE: |docs| ]
+CREATE _SPARSE_ VECTOR docv[SIZE: |voc| ]
+CREATE _SPARSE_ VECTOR queryv[SIZE: |voc| ]
+
+FOR i : 1..|voc| :	// building the query vector
+	IF voc[i] IN keywords : queryv[i] = 1
+	ELSE : queryv = 0
+	
+FOR EACH doc IN docs :		
+	FOR i : 1..|voc| :
+		docv[i] = doc.tf(voc[i])
+
+FOR i : 1..|docs| :		// computing results
+	results[i][doc] = docs[i]
+	IF docs[i] NOT IN matches : 
+		results[i][sim] = 0
+	ELSE : 
+		FOR i : 1..|voc| :	// building the tf vector 
+			docv[i] = docs[i].tf(voc[i])
+
+		results[i][sim] = cosine(queryv,docv)
+
+RETURN results
+
+
+
+
