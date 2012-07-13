@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import sun.awt.windows.ThemeReader;
-import sun.font.EAttribute;
-
 public class DBManager {
 
 	private Connection connection;
@@ -68,21 +65,28 @@ public class DBManager {
 		preparedStatement.executeUpdate();
 	}
 
-	public void storeIndexes(Map<String, Map<String, List<Integer>>> indexes) throws SQLException {
-		connection.setAutoCommit(false);
-
-		for (Entry<String, Map<String, List<Integer>>> domainEntry : indexes.entrySet()) {
-			String domain = domainEntry.getKey();
-
-			for (Entry<String, List<Integer>> urlEntry : domainEntry.getValue().entrySet()) {
-				String url = urlEntry.getKey();
-
-				int docId = storeDocument(domain, url);
-
-				for (Integer wordId : urlEntry.getValue()) {
-					storeRelation(docId, wordId);
+	public void storeIndexes(Map<String, Map<String, List<Integer>>> indexes) {
+		try {
+			connection.setAutoCommit(false);
+	
+			for (Entry<String, Map<String, List<Integer>>> domainEntry : indexes.entrySet()) {
+				String domain = domainEntry.getKey();
+	
+				for (Entry<String, List<Integer>> urlEntry : domainEntry.getValue().entrySet()) {
+					String url = urlEntry.getKey();
+	
+					int docId = storeDocument(domain, url);
+	
+					for (Integer wordId : urlEntry.getValue()) {
+						storeRelation(docId, wordId);
+					}
 				}
 			}
+			
+			connection.commit();
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			raiseSQLExecutionError(e);
 		}
 	}
 

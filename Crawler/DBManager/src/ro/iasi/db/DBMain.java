@@ -21,8 +21,7 @@ public class DBMain {
 			
 			@Override
 			public void pushIndexes(IndexesDTO indexesDTO) {
-				
-				
+				dbManager.storeIndexes(indexesDTO.getIndexes());
 			}
 			
 			@Override
