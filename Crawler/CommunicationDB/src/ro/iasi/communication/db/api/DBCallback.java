@@ -9,5 +9,6 @@ public interface DBCallback {
 	public void pushIndexes(IndexesDTO indexesDTO);
 
 	public List<Integer> getWordIds();
+	public int getWordsCount();
 	
 }

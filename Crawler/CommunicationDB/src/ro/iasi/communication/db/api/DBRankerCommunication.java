@@ -7,6 +7,6 @@ import java.util.List;
 public interface DBRankerCommunication {
 
 	public List<Integer> getWordIds() throws UnknownHostException, IOException, ClassNotFoundException;
-	public int getWordsCount();
+	public int getWordsCount() throws IOException;
 	
 }

@@ -29,9 +29,26 @@ public class DBManager {
 		
 		try {
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT if FROM words");
+			ResultSet rs = statement.executeQuery("SELECT id FROM words");
 			while (rs.next()) {
 				result.add(rs.getInt("id"));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			raiseSQLExecutionError(e);
+		}
+		
+		return result;
+	}
+	
+	public int getWordsCount() {
+		int result = -1;
+		
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM words");
+			while (rs.next()) {
+				result = rs.getInt(1);
 			}
 			rs.close();
 		} catch (SQLException e) {
