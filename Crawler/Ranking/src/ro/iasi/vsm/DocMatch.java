@@ -1,5 +1,7 @@
 package ro.iasi.vsm;
 
+import java.util.List;
+
 public class DocMatch {
 
 	public int docId;
