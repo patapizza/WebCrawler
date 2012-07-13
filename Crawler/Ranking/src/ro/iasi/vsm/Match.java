@@ -6,7 +6,7 @@ public class Match {
 	public int tf;
 
 	public Match(int wordId, int tf) {
-		this.wordId = wordId;
+		this.wordId = wordId; 
 		this.tf = tf;
 	}
 
