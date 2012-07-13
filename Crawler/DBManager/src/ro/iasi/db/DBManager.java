@@ -59,7 +59,7 @@ public class DBManager {
 	}
 
 	private int storeDocument(String domain, String url) throws SQLException {
-		PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO documents (domain, url) VALUES (?, ?)",
+		PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO documents (domain, url) VALUES (?, ?)",
 				PreparedStatement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, domain);
 		preparedStatement.setString(2, url);
@@ -71,13 +71,27 @@ public class DBManager {
 		while (resultSet.next()) {
 			result = resultSet.getInt(1);
 		}
+		
 		resultSet.close();
+		
+		// already exists, get original id
+		if (result == -1) {
+			PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT id FROM documents WHERE domain = ? AND url = ?");
+			preparedStatement2.setString(1, domain);
+			preparedStatement2.setString(2, url);
+			
+			ResultSet rs = preparedStatement2.getResultSet();
+			
+			while (rs.next()) {
+				result = rs.getInt(1);
+			}
+		}
 
 		return result;
 	}
 
 	private void storeRelation(int docId, int wordId) throws SQLException {
-		PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO relations (doc_id, word_id) VALUES (?, ?)");
+		PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO relations (doc_id, word_id) VALUES (?, ?)");
 		preparedStatement.setInt(1, docId);
 		preparedStatement.setInt(2, wordId);
 		preparedStatement.executeUpdate();

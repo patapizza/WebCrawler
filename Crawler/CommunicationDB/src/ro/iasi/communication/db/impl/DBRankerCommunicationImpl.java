@@ -8,9 +8,6 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
-import java.util.Map;
-
-import com.sun.xml.internal.fastinfoset.algorithm.BuiltInEncodingAlgorithm.WordListener;
 
 import ro.iasi.communication.db.api.DBRankerCommunication;
 import ro.iasi.communication.db.enums.Operation;
