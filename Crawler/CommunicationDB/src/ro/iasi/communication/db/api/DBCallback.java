@@ -10,5 +10,6 @@ public interface DBCallback {
 
 	public List<Integer> getWordIds();
 	public int getWordsCount();
+	public List<DocWordDTO> getDocWordAssociations();
 	
 }
