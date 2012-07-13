@@ -25,8 +25,10 @@ public class Assigner implements LinksCallback {
 			}
 
 		});
-		String str = "http://192.168.243.80/riw";
+		//String str = "http://192.168.243.80/riw";
+		String str="http://www.waldhausen.at/";
 		List<String> l=new LinkedList<String>();
+		l.add(str);
 		this.addLinks(getDomain(str), l);
 	}
 
