@@ -6,6 +6,7 @@ import java.util.Map;
 
 import ro.iasi.communication.db.api.DBCallback;
 import ro.iasi.communication.db.api.DBServerCommunication;
+import ro.iasi.communication.db.api.DocWordDTO;
 import ro.iasi.communication.db.api.IndexesDTO;
 import ro.iasi.communication.db.impl.DBServerCommunicationImpl;
 
@@ -38,6 +39,11 @@ public class DBMain {
 			@Override
 			public int getWordsCount() {
 				return dbManager.getWordsCount();
+			}
+
+			@Override
+			public List<DocWordDTO> getDocWordAssociations() {
+				return dbManager.getDocWordAssociations();
 			}
 		});
 		

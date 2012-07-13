@@ -40,7 +40,6 @@ import edu.uci.ics.crawler4j.url.URLCanonicalizer;
 import edu.uci.ics.crawler4j.url.WebURL;
 import edu.uci.ics.crawler4j.util.IO;
 
-
 /**
  * The controller that manages a crawling session. This class creates the
  * crawler threads and monitors their progress.
@@ -134,9 +133,12 @@ public class CrawlController extends Configurable {
 		} else {
 			this.linksToProcess = communicationInterface.getLinks().getUrls();
 		}
-		String str = this.linksToProcess.get(0);
-		this.linksToProcess.remove(str);
-		return str;
+		if (this.linksToProcess.size() > 0) {
+			String str = new URL(this.linksToProcess.get(0)).toString();
+			this.linksToProcess.remove(str);
+			return str;
+		}
+		return null;
 	}
 
 	protected void getNextUrls() throws UnknownHostException,
@@ -151,7 +153,7 @@ public class CrawlController extends Configurable {
 		}
 	}
 
-	private CrawlerCommunication communicationInterface=new CrawlerCommunicationImpl();
+	private CrawlerCommunication communicationInterface = new CrawlerCommunicationImpl();
 	private List<String> linksToProcess;
 
 	/**
@@ -169,7 +171,6 @@ public class CrawlController extends Configurable {
 	public <T extends WebCrawler> void start(final Class<T> _c,
 			final int numberOfCrawlers) throws UnknownHostException,
 			ClassNotFoundException, IOException {
-		this.addSeed("http://192.168.243.80/riw");
 		this.addSeed(getNextUrl());
 		this.start(_c, numberOfCrawlers, true);
 	}
@@ -245,9 +246,14 @@ public class CrawlController extends Configurable {
 								if (!someoneIsWorking) {
 									// TODO fetch links
 									getNextUrls();
-									for(String url:linksToProcess){
-										URL u = new URL("http", url, "");
+									int numbUrls = linksToProcess.size();
+									for (String url : linksToProcess) {
+										URL u = new URL(url);
 										addSeed(u.toString());
+									}
+									linksToProcess = null;
+									if (numbUrls > 0) {
+										continue;
 									}
 									// Make sure again that none of the threads
 									// are
@@ -391,6 +397,9 @@ public class CrawlController extends Configurable {
 	 */
 	public void addSeed(String pageUrl, int docId) {
 		String canonicalUrl = URLCanonicalizer.getCanonicalURL(pageUrl);
+		if (pageUrl.contains("3.80/riw/up.gif")) {
+			System.out.println(pageUrl);
+		}
 		if (canonicalUrl == null) {
 			logger.error("Invalid seed URL: " + pageUrl);
 			return;

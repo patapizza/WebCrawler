@@ -16,7 +16,7 @@ public class LinksDTO implements Serializable {
 	}
 
 	public LinksDTO() {
-		this.urls = null;
+
 	}
 
 	public String getUrlRoot() {

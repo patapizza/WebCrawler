@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import ro.iasi.communication.db.api.DocWordDTO;
+
 public class DBManager {
 
 	private Connection connection;
@@ -26,7 +28,7 @@ public class DBManager {
 
 	public List<Integer> getWordIds() {
 		List<Integer> result = new ArrayList<>();
-		
+
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT id FROM words");
@@ -37,13 +39,36 @@ public class DBManager {
 		} catch (SQLException e) {
 			raiseSQLExecutionError(e);
 		}
+
+		return result;
+	}
+
+	// select r.doc_id, r.word_id from relations as r join words as w join
+	// documents as d where
+	// d.id=r.doc_id and r.word_id=w.id and w.value='appraisal';
+	public List<DocWordDTO> getDocWordAssociations() {
+		List<DocWordDTO> result = new ArrayList<>();
+		
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("select r.doc_id as doc, r.word_id as word from relations r join words w join documents d where d.id=r.doc_id and r.word_id=w.id and w.value='appraisal'");
+			while (rs.next()) {
+				DocWordDTO dto = new DocWordDTO();
+				dto.setDocId(rs.getInt("doc"));
+				dto.setWordId(rs.getInt("word"));
+				result.add(dto);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			raiseSQLExecutionError(e);
+		}
 		
 		return result;
 	}
-	
+
 	public int getWordsCount() {
 		int result = -1;
-		
+
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM words");
@@ -54,10 +79,10 @@ public class DBManager {
 		} catch (SQLException e) {
 			raiseSQLExecutionError(e);
 		}
-		
+
 		return result;
 	}
-	
+
 	public Map<String, Integer> getDictionary() {
 		Map<String, Integer> result = new LinkedHashMap<>();
 
@@ -88,17 +113,17 @@ public class DBManager {
 		while (resultSet.next()) {
 			result = resultSet.getInt(1);
 		}
-		
+
 		resultSet.close();
-		
+
 		// already exists, get original id
 		if (result == -1) {
 			PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT id FROM documents WHERE domain = ? AND url = ?");
 			preparedStatement2.setString(1, domain);
 			preparedStatement2.setString(2, url);
-			
+
 			ResultSet rs = preparedStatement2.getResultSet();
-			
+
 			while (rs.next()) {
 				result = rs.getInt(1);
 			}
@@ -117,21 +142,21 @@ public class DBManager {
 	public void storeIndexes(Map<String, Map<String, List<Integer>>> indexes) {
 		try {
 			connection.setAutoCommit(false);
-	
+
 			for (Entry<String, Map<String, List<Integer>>> domainEntry : indexes.entrySet()) {
 				String domain = domainEntry.getKey();
-	
+
 				for (Entry<String, List<Integer>> urlEntry : domainEntry.getValue().entrySet()) {
 					String url = urlEntry.getKey();
-	
+
 					int docId = storeDocument(domain, url);
-	
+
 					for (Integer wordId : urlEntry.getValue()) {
 						storeRelation(docId, wordId);
 					}
 				}
 			}
-			
+
 			connection.commit();
 			connection.setAutoCommit(true);
 		} catch (SQLException e) {
