@@ -13,5 +13,8 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CommunicationDB"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DBManager"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Ranking"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

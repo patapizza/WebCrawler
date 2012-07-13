@@ -8,8 +8,8 @@ import no.uib.cipr.matrix.sparse.SparseVector;
 
 public class Ranking {
 
-	private List<Integer> keywordsId; // select id from words
-	private List<DocMatch> docMatches; // 
+	private List<Integer> keywordsId; // select id from words where value like 'word1' or value like 'word2' etc... 
+	private List<DocMatch> docMatches; // select r.doc_id, r.word_id from relations as r join words as w join documents as d where d.id=r.doc_id and r.word_id=w.id and w.value='appraisal'; 
 	private int vocSize; // select count(*) from words
 
 	public Ranking(List<Integer> keywordsId, List<DocMatch> docMatches, int vocSize) {
