@@ -59,13 +59,14 @@ public class Assigner implements LinksCallback {
 	}
 
 	public Node getNextDomain() {
-		Date now = new Date(System.currentTimeMillis() - 3600000);
+		Date timelimit = new Date(System.currentTimeMillis() - 3600000);
 		Node domain = null;
 		for (Node d : domains)
-			if (d.getTimestamp().after(now)) {
+			if (d.getTimestamp().before(timelimit)) {
 				domain = d;
 				break;
 			}
+		
 		if (domain == null)
 			return null;
 		domain.updateTimestamp();
