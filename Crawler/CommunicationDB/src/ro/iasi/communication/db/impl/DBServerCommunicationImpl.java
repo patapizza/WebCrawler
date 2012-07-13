@@ -8,10 +8,11 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import ro.iasi.communication.db.api.DBCallback;
 import ro.iasi.communication.db.api.DBServerCommunication;
-import ro.iasi.communication.db.api.IndexesDTO;
+import ro.iasi.communication.db.api.PageWordDTO;
 import ro.iasi.communication.db.enums.Operation;
 
 public class DBServerCommunicationImpl implements DBServerCommunication {
@@ -36,7 +37,7 @@ public class DBServerCommunicationImpl implements DBServerCommunication {
 			Operation operation = (Operation) objectInputStream.readObject();
 			
 			if (operation == Operation.SEND) {
-				listener.pushIndexes((IndexesDTO) objectInputStream.readObject());
+				listener.pushIndexes((List<PageWordDTO>) objectInputStream.readObject());
 			} else if (operation == Operation.GET) {
 				ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 				objectOutputStream.writeObject(listener.getDictionary());

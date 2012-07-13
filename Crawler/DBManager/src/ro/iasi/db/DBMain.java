@@ -8,6 +8,7 @@ import ro.iasi.communication.db.api.DBCallback;
 import ro.iasi.communication.db.api.DBServerCommunication;
 import ro.iasi.communication.db.api.DocWordDTO;
 import ro.iasi.communication.db.api.IndexesDTO;
+import ro.iasi.communication.db.api.PageWordDTO;
 import ro.iasi.communication.db.impl.DBServerCommunicationImpl;
 
 public class DBMain {
@@ -22,8 +23,8 @@ public class DBMain {
 		dbServerCommunication.registerListener(new DBCallback() {
 			
 			@Override
-			public void pushIndexes(IndexesDTO indexesDTO) {
-				dbManager.storeIndexes(indexesDTO.getIndexes());
+			public void pushIndexes(List<PageWordDTO> dtos) {
+				dbManager.storeIndexes(dtos);
 			}
 			
 			@Override

@@ -59,10 +59,9 @@ public class MyCrawler extends WebCrawler {
 
 		if (page.getParseData() instanceof HtmlParseData) {
 			HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-			String text = htmlParseData.getText();
-
-			indexPage(text, url);
-
+	
+			indexPage(htmlParseData.getText(), url,htmlParseData.getTitle());
+			
 			// String html = htmlParseData.getHtml();
 			List<WebURL> links = htmlParseData.getOutgoingUrls();
 			List<String> stringLinks = new LinkedList<>();
@@ -78,7 +77,7 @@ public class MyCrawler extends WebCrawler {
 		}
 	}
 
-	private void indexPage(String data, String pageUrl) {
+	private void indexPage(String data, String pageUrl, String title) {
 		StringTokenizer tokenizer = new StringTokenizer(data);
 		IndexesDTO indexObject = new IndexesDTO();
 

@@ -6,7 +6,7 @@ import java.util.Map;
 public interface DBCallback {
 
 	public Map<String, Integer> getDictionary();
-	public void pushIndexes(IndexesDTO indexesDTO);
+	public void pushIndexes(List<PageWordDTO> dtos);
 
 	public List<Integer> getWordIds();
 	public int getWordsCount();

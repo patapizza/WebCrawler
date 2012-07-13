@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import ro.iasi.communication.db.api.DocWordDTO;
+import ro.iasi.communication.db.api.PageWordDTO;
 
 public class DBManager {
 
@@ -100,11 +101,12 @@ public class DBManager {
 		return result;
 	}
 
-	private int storeDocument(String domain, String url) throws SQLException {
-		PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO documents (domain, url) VALUES (?, ?)",
+	private int storeDocument(String domain, String url, String title) throws SQLException {
+		PreparedStatement preparedStatement = connection.prepareStatement("INSERT IGNORE INTO documents (domain, url, title) VALUES (?, ?, ?)",
 				PreparedStatement.RETURN_GENERATED_KEYS);
 		preparedStatement.setString(1, domain);
 		preparedStatement.setString(2, url);
+		preparedStatement.setString(3, title);
 		preparedStatement.executeUpdate();
 
 		int result = -1;
@@ -139,22 +141,27 @@ public class DBManager {
 		preparedStatement.executeUpdate();
 	}
 
-	public void storeIndexes(Map<String, Map<String, List<Integer>>> indexes) {
+	public void storeIndexes(List<PageWordDTO> dtos) {
 		try {
 			connection.setAutoCommit(false);
 
-			for (Entry<String, Map<String, List<Integer>>> domainEntry : indexes.entrySet()) {
-				String domain = domainEntry.getKey();
-
-				for (Entry<String, List<Integer>> urlEntry : domainEntry.getValue().entrySet()) {
-					String url = urlEntry.getKey();
-
-					int docId = storeDocument(domain, url);
-
-					for (Integer wordId : urlEntry.getValue()) {
-						storeRelation(docId, wordId);
-					}
-				}
+//			for (Entry<String, Map<String, List<Integer>>> domainEntry : indexes.entrySet()) {
+//				String domain = domainEntry.getKey();
+//
+//				for (Entry<String, List<Integer>> urlEntry : domainEntry.getValue().entrySet()) {
+//					String url = urlEntry.getKey();
+//
+//					int docId = storeDocument(domain, url);
+//
+//					for (Integer wordId : urlEntry.getValue()) {
+//						storeRelation(docId, wordId);
+//					}
+//				}
+//			}
+			
+			for (PageWordDTO dto : dtos) {
+				int docId = storeDocument(dto.getDomain(), dto.getURL(), dto.getTitle());
+				storeRelation(docId, dto.getWord());
 			}
 
 			connection.commit();
