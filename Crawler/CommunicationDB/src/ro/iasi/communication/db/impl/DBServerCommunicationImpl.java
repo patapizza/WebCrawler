@@ -41,6 +41,10 @@ public class DBServerCommunicationImpl implements DBServerCommunication {
 				ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 				objectOutputStream.writeObject(listener.getDictionary());
 				objectOutputStream.close();
+			} else if (operation == Operation.WORD_IDS) {
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+				objectOutputStream.writeObject(listener.getWordIds());
+				objectOutputStream.close();
 			}
 			
 			objectInputStream.close();

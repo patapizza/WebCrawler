@@ -1,6 +1,7 @@
 package ro.iasi.db;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import ro.iasi.communication.db.api.DBCallback;
@@ -27,6 +28,11 @@ public class DBMain {
 			@Override
 			public Map<String, Integer> getDictionary() {
 				return dbManager.getDictionary();
+			}
+
+			@Override
+			public List<Integer> getWordIds() {
+				return dbManager.getWordIds();
 			}
 		});
 		

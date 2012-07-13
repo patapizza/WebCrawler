@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,23 @@ public class DBManager {
 				+ "FOREIGN KEY (WordID) REFERENCES Words(ID), FOREIGN KEY (DocID) REFERENCES Documents(ID))");
 	}
 
+	public List<Integer> getWordIds() {
+		List<Integer> result = new ArrayList<>();
+		
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT if FROM words");
+			while (rs.next()) {
+				result.add(rs.getInt("id"));
+			}
+			rs.close();
+		} catch (SQLException e) {
+			raiseSQLExecutionError(e);
+		}
+		
+		return result;
+	}
+	
 	public Map<String, Integer> getDictionary() {
 		Map<String, Integer> result = new LinkedHashMap<>();
 
