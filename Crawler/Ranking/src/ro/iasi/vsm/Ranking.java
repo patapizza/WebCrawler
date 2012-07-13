@@ -1,11 +1,7 @@
 package ro.iasi.vsm;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import ro.iasi.communication.db.api.DBRankerCommunication;
-import ro.iasi.communication.db.impl.DBRankerCommunicationImpl;
 
 import no.uib.cipr.matrix.Vector.Norm;
 import no.uib.cipr.matrix.sparse.SparseVector;
@@ -19,15 +15,15 @@ public class Ranking {
 	public Ranking() {
 		
 		
-		DBRankerCommunication db = new DBRankerCommunicationImpl();
-		try {
-			
-//			this(db.getWordIds(), null, db.getWordsCount());
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		DBRankerCommunication db = new DBRankerCommunicationImpl();
+//		try {
+//			
+////			this(db.getWordIds(), null, db.getWordsCount());
+//			
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 			
 		
 	}
