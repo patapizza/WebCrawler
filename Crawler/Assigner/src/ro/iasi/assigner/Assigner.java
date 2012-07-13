@@ -25,9 +25,8 @@ public class Assigner implements LinksCallback {
 			}
 
 		});
-		//String str = "http://192.168.243.80/riw";
-		String str="http://www.waldhausen.at/";
-		List<String> l=new LinkedList<String>();
+		String str = "http://192.168.243.80/riw";
+		List<String> l = new LinkedList<String>();
 		l.add(str);
 		this.addLinks(getDomain(str), l);
 	}
@@ -61,14 +60,13 @@ public class Assigner implements LinksCallback {
 	}
 
 	public Node getNextDomain() {
-		Date timelimit = new Date(System.currentTimeMillis() - 3600000);
+		Date now = new Date(System.currentTimeMillis() - 3600000);
 		Node domain = null;
 		for (Node d : domains)
-			if (d.getTimestamp().before(timelimit)) {
+			if (d.getTimestamp().after(now)) {
 				domain = d;
 				break;
 			}
-		
 		if (domain == null)
 			return null;
 		domain.updateTimestamp();
