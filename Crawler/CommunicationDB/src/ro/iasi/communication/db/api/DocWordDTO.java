@@ -1,6 +1,8 @@
 package ro.iasi.communication.db.api;
 
-public class DocWordDTO {
+import java.io.Serializable;
+
+public class DocWordDTO implements Serializable{
 
 	Integer docId, wordId;
 
