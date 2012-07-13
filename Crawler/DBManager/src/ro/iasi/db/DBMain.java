@@ -34,6 +34,11 @@ public class DBMain {
 			public List<Integer> getWordIds() {
 				return dbManager.getWordIds();
 			}
+
+			@Override
+			public int getWordsCount() {
+				return dbManager.getWordsCount();
+			}
 		});
 		
 		dbServerCommunication.startListening();

@@ -43,9 +43,19 @@ public class DBRankerCommunicationImpl implements DBRankerCommunication {
 	}
 
 	@Override
-	public int getWordsCount() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getWordsCount() throws IOException {
+		Socket socket = createSocket();
+
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		objectOutputStream.writeObject(Operation.WORD_COUNT);
+
+		ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+		int count = objectInputStream.readInt();
+
+		objectInputStream.close();
+		socket.close();
+
+		return count;
 	}
 
 }
