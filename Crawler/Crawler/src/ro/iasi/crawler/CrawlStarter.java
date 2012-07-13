@@ -1,5 +1,8 @@
 package ro.iasi.crawler;
 
+import java.util.Map;
+
+import ro.iasi.communication.db.impl.DBCrawlerCommunicationImpl;
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
@@ -7,7 +10,16 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 public class CrawlStarter {
+	private static Map<String, Integer> dictionary;
+	public static int getWordID(String word){
+		return dictionary.get(word);
+	}
+	
     public static void main(String[] args) throws Exception {
+    	DBCrawlerCommunicationImpl wordDbCommunicationImpl=new DBCrawlerCommunicationImpl();
+    	CrawlStarter.dictionary=wordDbCommunicationImpl.getDictionary();
+    	
+    	
            String crawlStorageFolder = "/tmp/crawling";
             int numberOfCrawlers = 3;
             

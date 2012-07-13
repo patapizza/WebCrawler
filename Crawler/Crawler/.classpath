@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="libs/tika-core-1.0.jar"/>
 	<classpathentry kind="lib" path="libs/tika-parsers-1.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Communication"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CommunicationDB"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
