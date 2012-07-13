@@ -29,7 +29,7 @@ public class TestMain {
 		IndexesDTO indexesDTO = new IndexesDTO();
 		indexesDTO.setIndexes(indexes);
 		
-		communication.pushIndexes(indexesDTO);
+//		communication.pushIndexes(indexesDTO);
 	}
 
 }

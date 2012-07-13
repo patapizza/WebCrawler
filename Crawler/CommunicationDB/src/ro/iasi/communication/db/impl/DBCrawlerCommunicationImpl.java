@@ -7,10 +7,12 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Map;
 
 import ro.iasi.communication.db.api.DBCrawlerCommunication;
 import ro.iasi.communication.db.api.IndexesDTO;
+import ro.iasi.communication.db.api.PageWordDTO;
 import ro.iasi.communication.db.enums.Operation;
 
 public class DBCrawlerCommunicationImpl implements DBCrawlerCommunication {
@@ -44,12 +46,12 @@ public class DBCrawlerCommunicationImpl implements DBCrawlerCommunication {
 	}
 
 	@Override
-	public void pushIndexes(IndexesDTO indexesDTO) throws UnknownHostException, IOException {
+	public void pushIndexes(List<PageWordDTO> dtos) throws UnknownHostException, IOException {
 		Socket socket = createSocket();
 
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 		objectOutputStream.writeObject(Operation.SEND);
-		objectOutputStream.writeObject(indexesDTO);
+		objectOutputStream.writeObject(dtos);
 
 		objectOutputStream.close();
 		socket.close();
