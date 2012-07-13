@@ -14,6 +14,7 @@ import ro.iasi.communication.api.CrawlerCommunication;
 import ro.iasi.communication.api.LinksDTO;
 import ro.iasi.communication.db.api.DBCrawlerCommunication;
 import ro.iasi.communication.db.api.IndexesDTO;
+import ro.iasi.communication.db.api.PageWordDTO;
 import ro.iasi.communication.db.impl.DBCrawlerCommunicationImpl;
 import ro.iasi.communication.impl.CrawlerCommunicationImpl;
 import edu.uci.ics.crawler4j.crawler.Page;
@@ -59,9 +60,9 @@ public class MyCrawler extends WebCrawler {
 
 		if (page.getParseData() instanceof HtmlParseData) {
 			HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-	
-			indexPage(htmlParseData.getText(), url,htmlParseData.getTitle());
-			
+
+			indexPage(htmlParseData.getText(), url, htmlParseData.getTitle());
+
 			// String html = htmlParseData.getHtml();
 			List<WebURL> links = htmlParseData.getOutgoingUrls();
 			List<String> stringLinks = new LinkedList<>();
@@ -89,30 +90,40 @@ public class MyCrawler extends WebCrawler {
 			e1.printStackTrace();
 		}
 
+		List<PageWordDTO> callback = new LinkedList<>();
+
 		Map<String, Map<String, List<Integer>>> indexes = new HashMap<String, Map<String, List<Integer>>>();
 
 		while (tokenizer.hasMoreTokens()) {
 			Integer wordId = CrawlStarter.getWordID(tokenizer.nextToken());
 			if (wordId != null) {
-				// try get page
-				Map<String, List<Integer>> pages = indexes.get(url.getHost());
-				if (pages == null) {
-					pages = new HashMap<String, List<Integer>>();
-					indexes.put(url.getHost(), pages);
-				}
-				// try get list of words
-				List<Integer> words = pages.get(url.toString());
-				if (words == null) {
-					words = new LinkedList<Integer>();
-					pages.put(url.toString(), words);
-				}
-				words.add(wordId);
+				PageWordDTO o = new PageWordDTO();
+				o.setDomain(url.getHost());
+				o.setTitle(title);
+				o.setURL(url.toString());
+				o.setWord(wordId);
+				callback.add(o);
 			}
+			// if (wordId != null) {
+			// // try get page
+			// Map<String, List<Integer>> pages = indexes.get(url.getHost());
+			// if (pages == null) {
+			// pages = new HashMap<String, List<Integer>>();
+			// indexes.put(url.getHost(), pages);
+			// }
+			// // try get list of words
+			// List<Integer> words = pages.get(url.toString());
+			// if (words == null) {
+			// words = new LinkedList<Integer>();
+			// pages.put(url.toString(), words);
+			// }
+			// words.add(wordId);
+			// }
 		}
 
-		indexObject.setIndexes(indexes);
+		// indexObject.setIndexes(indexes);
 		try {
-			indexDbComm.pushIndexes(indexObject);
+			indexDbComm.pushIndexes(callback);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
