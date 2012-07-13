@@ -8,9 +8,9 @@ import no.uib.cipr.matrix.sparse.SparseVector;
 
 public class Ranking {
 
-	private List<Integer> keywordsId;
-	private List<DocMatch> docMatches;
-	private int vocSize;
+	private List<Integer> keywordsId; // select id from words
+	private List<DocMatch> docMatches; // 
+	private int vocSize; // select count(*) from words
 
 	public Ranking(List<Integer> keywordsId, List<DocMatch> docMatches, int vocSize) {
 		this.keywordsId = keywordsId;
