@@ -124,7 +124,7 @@ public class DBManager {
 			preparedStatement2.setString(1, domain);
 			preparedStatement2.setString(2, url);
 
-			ResultSet rs = preparedStatement2.getResultSet();
+			ResultSet rs = preparedStatement2.executeQuery();
 
 			while (rs.next()) {
 				result = rs.getInt(1);
