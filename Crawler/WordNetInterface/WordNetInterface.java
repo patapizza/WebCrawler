@@ -37,8 +37,7 @@ public class WordNetInterface {
 		Connection co = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			//co = DriverManager.getConnection("jdbc:mysql://root:student@192.168.243.85/");
-			co = DriverManager.getConnection("jdbc:mysql://192.168.243.85:3306/webcrawler", "root", "student");
+			co = DriverManager.getConnection("jdbc:mysql://localhost:3306/webcrawler", "crawler", "student");
 		} catch (Exception ex) {
 			if (ex instanceof SQLException)
 				System.out.println("SQLException: " + ((SQLException) ex).getMessage() +
@@ -49,24 +48,21 @@ public class WordNetInterface {
 			return;
 		}
 		List<IWordID> iwIDs;
-		while (it.hasNext())
-			try {
-				iwIDs = (it.next()).getWordIDs();
-				for (IWordID iwID : iwIDs)
-					if ((iwID.getLemma()).length() < 42) {
-						System.out.println("INSERT INTO words (value) VALUES ('" + iwID.getLemma() + "');");
-						PreparedStatement ps = co.prepareStatement("INSERT INTO words (value) VALUES (?)");
+		PreparedStatement ps;
+		while (it.hasNext()) {
+			iwIDs = (it.next()).getWordIDs();
+			for (IWordID iwID : iwIDs)
+				if ((iwID.getLemma()).length() < 42) {
+					System.out.println("INSERT INTO words (value) VALUES ('" + iwID.getLemma() + "');");
+					try {
+						ps = co.prepareStatement("INSERT INTO words (value) VALUES (?)");
 						ps.setString(1, iwID.getLemma());
 						ps.executeUpdate();
+					} catch (SQLException ex) {
+						System.out.println("SQLException: " + ex.getMessage() + "SQLState: " + ex.getSQLState() + "ErrorCode: " + ex.getErrorCode());
 					}
-			} catch (SQLException ex) {
-				System.out.println("SQLException: " + ex.getMessage() +
-						   "SQLState: " + ex.getSQLState() +
-						   "ErrorCode: " + ex.getErrorCode());
-				return;
-			} finally {
-				// supposed to close statement but pula mea
-			}
+				}
+		}
 		if (co != null)
 			try {
 				co.close();
