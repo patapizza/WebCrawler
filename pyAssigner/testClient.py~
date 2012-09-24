@@ -1,0 +1,24 @@
+import socket
+import sys
+import time
+
+HOST, PORT = "localhost", 9999
+data = " ".join(sys.argv[1:])
+
+# Create a socket (SOCK_STREAM means a TCP socket)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+while 1 :
+    # Connect to server and send data
+    sock.connect((HOST, PORT))
+    try:
+        
+        sock.sendall(data + "\n")
+
+        # Receive data from the server and shut down
+        received = sock.recv(1024)
+        
+        time.sleep(1)
+    finally:
+        print "Sent: " + data
+        print "Received: " + received
