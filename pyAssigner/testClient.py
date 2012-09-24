@@ -1,9 +1,9 @@
 import socket
 import sys
 import time
+import yaml
 
 HOST, PORT = "localhost", 9999
-data = " ".join(sys.argv[1:])
 
 # Create a socket (SOCK_STREAM means a TCP socket)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -12,9 +12,11 @@ try:
     # Connect to server and send data
     sock.connect((HOST, PORT))    
 finally:
-    while 1 :
-        sock.sendall(data + "\n")
-        received = sock.recv(1024)    
+    n = 1
+    while 1 : 
         time.sleep(1)
-        print "Sent: " + data
-        print "Received: " + received
+        data = 'coucou '+str(n)
+        sock.sendall(yaml.dump(data) + "\n")
+        print "Sent: " + data        
+        n += 1
+        #received = sock.recv(1024)   
