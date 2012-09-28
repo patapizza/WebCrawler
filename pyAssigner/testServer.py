@@ -9,17 +9,21 @@ BUFF = 1024
 HOST = '127.0.0.1'# must be input parameter @TODO
 PORT = 9999 # must be input parameter @TODO
 
- 
+clients = {} # client (crawler) dictionnary: socket -> addr
+global serversock
 
 
-
-def createWindows():
-    winEvents = curses.newwin(10,60,0,0); winEvents.border(0)
-    winEvents.setscrreg(2, 8); winEvents.scrollok(True);  
-    winEvents.addstr(1, 10, '- Events -'); winEvents.refresh()    
+def createWindows(scrPtr):
+    (maxln, maxcol) = scrPtr.getmaxyx()
+    vSizeE = 2*(maxln-2)/3; vSizeC = (maxln-2)/3;
+    winEvents = curses.newwin(vSizeE,maxcol,0,0); winEvents.border(0)
+    winEvents.setscrreg(2, vSizeE-2); winEvents.scrollok(True);  
+    winEvents.addstr(1, 10, 'Events', curses.A_REVERSE)
+    winEvents.refresh()    
     
-    winCrawlers = curses.newwin(6,60,12,0); winCrawlers.border(0); 
-    winCrawlers.addstr(1, 10, '- Crawlers -');winCrawlers.refresh()      
+    winCrawlers = curses.newwin(vSizeC,maxcol,vSizeE+1,0); winCrawlers.border(0); 
+    winCrawlers.addstr(1, 10, 'Crawlers', curses.A_REVERSE)
+    winCrawlers.refresh()      
     
     return winEvents, winCrawlers
 
@@ -28,14 +32,27 @@ def printWin(winPtr, data):
     (maxln, _) = winPtr.getmaxyx()
     winPtr.scroll(); winPtr.border(0);
     winPtr.addstr(maxln-2, 2, repr(data)); winPtr.refresh()
+    
+def refreshWinList(winPtr, List, winName) :
+    (maxln, _) = winPtr.getmaxyx()
+    winPtr.erase(); winPtr.border(0)
+    winPtr.addstr(1, 10, winName, curses.A_REVERSE); 
+    nbC = 0
+    for value in List :
+        if nbC == maxln-3 and len(List) > nbC :
+            winPtr.addstr(nbC+2, 2, '...'); break
+        winPtr.addstr(nbC+2, 2, repr(value)); nbC+=1
+    winPtr.refresh()
+    
 
-# signal handler (ctrl+c)
-def signal_handler(signal, frame): 
+# interrupt signal handler (ctrl+c)
+def interrupt_handler(signal, frame): 
+    global serversock
     curses.echo() # Ending curses properly
     curses.endwin()
-    print 'Bye.'
+    serversock.close()
+    print('Bye.')
     sys.exit(0) # exit
-
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -43,33 +60,44 @@ def gen_response():
     return 'ack from server'
 
 def handler(clientsock, addr, winE, winC):
+    global clients
+    clients[clientsock] = addr
+    refreshWinList(winC, clients.values(), 'Crawlers')
     while 1:
         recv = clientsock.recv(BUFF)
         if not recv:
             clientsock.close()
-            print 'closing connection'
+            printWin(winE, 'Closing connection: ' + repr(addr))
+            del clients[clientsock]
+            refreshWinList(winC, clients.values(), 'Crawlers')
             break
-        data = yaml.load(recv)
+        data = yaml.load(recv) # YAML reassembly
         printWin(winE, 'Data RECV: ' + repr(data))
         #clientsock.send(gen_response())
         #print 'sent:' + repr(gen_response())
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+def main(w) :
+    #def resize_handler(signal, frame): # interrupt signal handler (ctrl+c)
+    #    w.erase()
+    #    w.addstr(0,0, str(w.getmaxyx()))
+    w.nodelay(1); curses.curs_set(0)
+    signal.signal(signal.SIGINT, interrupt_handler) # signal handler (ctrl+c)
+    #signal.signal(signal.SIGWINCH, resize_handler) # signal handler (ctrl+c)
+    winE, winC = createWindows(w)
 
-signal.signal(signal.SIGINT, signal_handler) # signal handler (ctrl+c)
-myscreen = curses.initscr()
-winE, winC = createWindows()
-
-serversock = socket(AF_INET, SOCK_STREAM) # create TCP server
-serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-serversock.bind((HOST, PORT))
-serversock.listen(5)
-while 1:
-    clientsock, addr = serversock.accept()
-    printWin(winE, 'Connection from ' +repr(addr))
-    thread.start_new_thread(handler, (clientsock, addr, winE, winC))
+    global serversock
+    serversock = socket(AF_INET, SOCK_STREAM) # create TCP server
+    serversock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+    serversock.bind((HOST, PORT))
+    serversock.listen(5)
+    while 1:
+        clientsock, addr = serversock.accept()
+        printWin(winE, 'Connection from ' +repr(addr))
+        thread.start_new_thread(handler, (clientsock, addr, winE, winC))
 
 
-
+if __name__=='__main__':
+     curses.wrapper(main)
 
