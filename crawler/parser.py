@@ -5,15 +5,16 @@ import urllib2
 
 class Parser:
 
-    def __init__(self, words, url):
+    def __init__(self, words):
         self.words = words
-	self.url = url
 	self.wc = []
 	self.links = []
-	self.preprocess()
+	self.url = None
 
     # retrieve words and links from document, count the word occurrences
     def preprocess(self):
+        if not self.url:
+	    return False
         html = self.fetch_url()
         tokens = filter(lambda(x): x, re.split('\W+', re.sub(r'<[^>]+>', '', html)))
 	self.links = map(lambda(x): re.sub(r'.*(?<!href=[\'"])href=[\'"]([^\'"]+)[\'"].*', '\\1', x), re.findall(r'<a [^>]+>[^<]+</a>', html))
@@ -34,7 +35,13 @@ class Parser:
 	sock.close()
 	return html
 
+    # feed in a new url to parse
+    def set_url(self, url):
+        self.url = url
+	self.preprocess()
+
 if __name__ == '__main__':
-    p = Parser(["google", "a"], "http://www.google.com")
+    p = Parser(["google", "a"])
+    p.set_url("http://www.google.com")
     print(p.get_links())
     print(p.get_wc())

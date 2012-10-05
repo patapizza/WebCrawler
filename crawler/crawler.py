@@ -1,32 +1,42 @@
 #!/usr/bin/python2.7
 
-import heapq
 import re
 
 class Crawler:
 
-    def __init__(self):
-        self.pqueue = []
+    def __init__(self, domains, words):
+        self.internals = [PNode(domain, "/") for domain in domains]
+	self.words = words
+	self.externals = []
     
-    def get_next_domain(self):
-        pass
+    def crawl(self):
+        p = Parser(words)
+        for pnode in self.internals:
+	   for page in pnode.get_pages():
+	       p.set_url(''.join([pnode.get_domain(), page.get_name()]))
+	       page.set_wc(p.get_wc())
+	       links = p.get_links()
+	       page.set_links(links)
+	       self.add_links(pnode, links)
 
-    def add_links(self, domain, links):
-        pointer = None
-        for pnode in self.pqueue:
-	    if pnode.get_domain() == domain:
-	        pointer = pnode
-		break
-	if pointer is None:
-	    pointer = PNode(domain, "index.html")
+    def add_links(self, pointer, links):
 	for link in links:
-	    if get_domain(link) == domain:
-	        pointer.add_page(link)
-	    else:
-	        pnode = PNode(get_domain(link), link)
-		pnode.add_referer(domain)
-		heapq.heappush(pqueue, (42, pnode))
-	heapq.heappush(pqueue, (42, pointer))
+	    domain = extract_domain(link)
+	    ptr = None
+	    for internal in self.internals:
+	        if domain == internal.get_domain():
+	            internal.add_page(link)
+		    ptr = internal
+	    if not ptr:
+	        pnode = None
+	        for external in self.externals:
+		    if external.get_domain() == domain:
+		        pnode = external
+			pnode.add_page(link)
+		if not pnode:
+	            pnode = PNode(domain, link)
+		    self.externals.append(pnode)
+		pnode.add_referer(pointer)
 
-def get_domain(link):
+def extract_domain(link):
     return re.sub(r'(https?://)?(([\w]+\.){1}([\w]+\.?)+)/?.*', '\\2', link)

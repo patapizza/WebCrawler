@@ -6,7 +6,7 @@ class PNode:
 
     def __init__(self, domain, page):
         self.domain = domain
-	self.pages = [page]
+	self.pages = [Page(page)]
 	self.referers = []
 	self.timestamp = time.time()
 
@@ -20,11 +20,13 @@ class PNode:
         return self.timestamp
 
     def add_page(self, page):
-        if not page in set(self.pages):
-            self.pages.append(page)
+        pages = [p.get_name() for p in self.pages]
+        if not page in set(pages):
+            self.pages.append(Page(page))
 
     def add_referer(self, referer):
-        if not referer in set(self.referers):
+        referers = [r.get_domain() for r in self.referers]
+        if not referer.get_domain() in set(referers):
 	    self.referers.append(referer)
 
     def update_timestamp(self):
