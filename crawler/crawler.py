@@ -1,6 +1,8 @@
 #!/usr/bin/python2.7
 
 import re
+from parser import Parser
+from pnode import PNode
 
 class Crawler:
 
@@ -10,7 +12,7 @@ class Crawler:
 	self.externals = []
     
     def crawl(self):
-        p = Parser(words)
+        p = Parser(self.words)
         for pnode in self.internals:
 	   for page in pnode.get_pages():
 	       p.set_url(''.join([pnode.get_domain(), page.get_name()]))
@@ -37,6 +39,12 @@ class Crawler:
 	            pnode = PNode(domain, link)
 		    self.externals.append(pnode)
 		pnode.add_referer(pointer)
+    
+    def get_externals(self):
+        return self.externals
+
+    def get_internals(self):
+        return self.internals
 
 def extract_domain(link):
     return re.sub(r'(https?://)?(([\w]+\.){1}([\w]+\.?)+)/?.*', '\\2', link)

@@ -39,9 +39,3 @@ class Parser:
     def set_url(self, url):
         self.url = url
 	self.preprocess()
-
-if __name__ == '__main__':
-    p = Parser(["google", "a"])
-    p.set_url("http://www.google.com")
-    print(p.get_links())
-    print(p.get_wc())

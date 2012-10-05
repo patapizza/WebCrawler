@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
 
 from time import time
+from page import Page
 
 class PNode:
 
@@ -8,13 +9,16 @@ class PNode:
         self.domain = domain
 	self.pages = [Page(page)]
 	self.referers = []
-	self.timestamp = time.time()
+	self.timestamp = time()
 
     def get_domain(self):
         return self.domain
 
     def get_referers(self):
         return self.referers
+
+    def get_pages(self):
+        return self.pages
 
     def get_timestamp(self):
         return self.timestamp
@@ -30,5 +34,5 @@ class PNode:
 	    self.referers.append(referer)
 
     def update_timestamp(self):
-        self.timestamp = time.time()
+        self.timestamp = time()
 
