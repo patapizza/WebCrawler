@@ -31,7 +31,7 @@ def createWindows(scrPtr):
 def printWin(winPtr, data):
     (maxln, _) = winPtr.getmaxyx()
     winPtr.scroll(); winPtr.border(0);
-    winPtr.addstr(maxln-2, 2, repr(data)); winPtr.refresh()
+    winPtr.addstr(maxln-2, 2, repr(data), curses.A_REVERSE); winPtr.refresh()
     
 def refreshWinList(winPtr, List, winName) :
     (maxln, _) = winPtr.getmaxyx()
