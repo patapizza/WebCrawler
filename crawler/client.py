@@ -35,7 +35,7 @@ finally:
     domains = recv_data()
     if not domains:
         sock.close()
-        print("Connection closed by peer")
+        print("Connection reset by peer")
         sys.exit(1)
     crawler = Crawler(domains, [])
     for domain in crawler.crawl():
@@ -47,6 +47,7 @@ finally:
         data = recv_data()
         if not data:
             sock.close()
-            print("Connection closed by peer")
+            print("Connection reset by peer")
             break
         print("Received: %s\n" % data)
+        crawler.add_domains(data)

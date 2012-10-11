@@ -16,7 +16,14 @@ class Crawler:
         self.internals = domains
         self.words = words
         self.externals = []
-    
+
+    '''
+    input:
+        domains: a list of PNode instances
+    '''
+    def add_domains(self, domains):
+        self.internals.append(domains)
+
     def crawl(self):
         p = Parser(self.words)
         while self.internals:

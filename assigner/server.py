@@ -77,6 +77,7 @@ def handler(clientsock, addr, winE, winC):
             break
         data = yaml.load(recv) # YAML reassembly
         printWin(winE, 'Data RECV: ' + repr(data))
+        clientsock.sendall(yaml.dump([]))
         #clientsock.send(gen_response())
         #print 'sent:' + repr(gen_response())
 
@@ -100,6 +101,6 @@ if __name__=='__main__':
     while 1:
         clientsock, addr = serversock.accept()
         printWin(winE, 'Connection from ' +repr(addr))
-        clientsock.sendall(yaml.dump([PNode("http://www.google.com", Page("/"))]))
+        clientsock.sendall(yaml.dump([PNode("http://www.google.com", Page("/")), PNode("http://www.github.com", Page("/"))]))
         thread.start_new_thread(handler, (clientsock, addr, winE, winC))
 
