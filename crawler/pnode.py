@@ -11,6 +11,9 @@ class PNode:
         self.referers = []
         self.timestamp = time()
 
+    def __str__(self):
+        return self.domain
+
     def get_domain(self):
         return self.domain
 

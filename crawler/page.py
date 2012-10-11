@@ -4,7 +4,7 @@ class Page:
 
     def __init__(self, name):
         self.name = name
-    self.wc = []
+        self.wc = []
 
     def get_name(self):
         return self.name

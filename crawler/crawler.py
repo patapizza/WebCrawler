@@ -7,19 +7,28 @@ from pnode import PNode
 class Crawler:
 
     def __init__(self, domains, words):
-        self.internals = [PNode(domain, "/") for domain in domains]
+        # self.internals = [PNode(domain, "/") for domain in domains]
+        self.internals = domains
         self.words = words
         self.externals = []
     
     def crawl(self):
         p = Parser(self.words)
-        for pnode in self.internals:
+        while self.internals:
+            pnode = self.internals[0]
             for page in pnode.get_pages():
                 p.set_url(''.join([pnode.get_domain(), page.get_name()]))
                 page.set_wc(p.get_wc())
                 links = p.get_links()
                 page.set_links(links)
                 self.add_links(pnode, links)
+            # sending pnode + externals + |internals| - 1 to server
+            d = {}
+            d["domain"] = self.internals.pop(0) # popping out pnode from internals
+            d["externals"] = self.externals
+            d["stack"] = len(self.internals)
+            yield d
+            self.externals = [] # emptying externals
 
     def add_links(self, pointer, links):
         for link in links:
@@ -28,17 +37,17 @@ class Crawler:
             for internal in self.internals:
                 if domain == internal.get_domain():
                     internal.add_page(link)
-    	            ptr = internal
+                    ptr = internal
             if not ptr:
                 pnode = None
                 for external in self.externals:
-    	            if external.get_domain() == domain:
-    	                pnode = external
-    		            pnode.add_page(link)
-    	        if not pnode:
+                    if external.get_domain() == domain:
+                        pnode = external
+                        pnode.add_page(link)
+                if not pnode:
                     pnode = PNode(domain, link)
-    	            self.externals.append(pnode)
-    	        pnode.add_referer(pointer)
+                    self.externals.append(pnode)
+                pnode.add_referer(pointer)
     
     def get_externals(self):
         return self.externals
