@@ -5,6 +5,7 @@ import curses
 import signal
 import sys
 
+from page import Page
 from pnode import PNode
 from parser import Parser
 
@@ -99,6 +100,6 @@ if __name__=='__main__':
     while 1:
         clientsock, addr = serversock.accept()
         printWin(winE, 'Connection from ' +repr(addr))
-        clientsock.sendall(yaml.dump([PNode("http://www.google.com", "/")]))
+        clientsock.sendall(yaml.dump([PNode("http://www.google.com", Page("/"))]))
         thread.start_new_thread(handler, (clientsock, addr, winE, winC))
 

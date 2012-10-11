@@ -37,7 +37,6 @@ finally:
         sock.close()
         print("Connection closed by peer")
         sys.exit(1)
-    print("Domains: %s\n" % domains)
     crawler = Crawler(domains, [])
     for domain in crawler.crawl():
         sock.sendall(yaml.dump(domain))

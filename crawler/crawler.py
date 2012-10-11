@@ -1,13 +1,18 @@
 #!/usr/bin/python2.7
 
 import re
+from page import Page
 from parser import Parser
 from pnode import PNode
 
 class Crawler:
 
+    '''
+    input:
+        domains: a list of PNode instances
+        words: a list of string
+    '''
     def __init__(self, domains, words):
-        # self.internals = [PNode(domain, "/") for domain in domains]
         self.internals = domains
         self.words = words
         self.externals = []
@@ -32,20 +37,21 @@ class Crawler:
 
     def add_links(self, pointer, links):
         for link in links:
+            page = Page(link)
             domain = extract_domain(link)
             ptr = None
             for internal in self.internals:
                 if domain == internal.get_domain():
-                    internal.add_page(link)
+                    internal.add_page(page)
                     ptr = internal
             if not ptr:
                 pnode = None
                 for external in self.externals:
                     if external.get_domain() == domain:
                         pnode = external
-                        pnode.add_page(link)
+                        pnode.add_page(page)
                 if not pnode:
-                    pnode = PNode(domain, link)
+                    pnode = PNode(domain, page)
                     self.externals.append(pnode)
                 pnode.add_referer(pointer)
     

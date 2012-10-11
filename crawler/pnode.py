@@ -1,13 +1,17 @@
 #!/usr/bin/python2.7
 
 from time import time
-from page import Page
 
 class PNode:
 
+    '''
+    input:
+        domain - a string
+        page - a Page object
+    '''
     def __init__(self, domain, page):
         self.domain = domain
-        self.pages = [Page(page)]
+        self.pages = [page]
         self.referers = []
         self.timestamp = time()
 
@@ -29,7 +33,7 @@ class PNode:
     def add_page(self, page):
         pages = [p.get_name() for p in self.pages]
         if not page in set(pages):
-            self.pages.append(Page(page))
+            self.pages.append(page)
 
     def add_referer(self, referer):
         referers = [r.get_domain() for r in self.referers]
