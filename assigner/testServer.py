@@ -31,7 +31,7 @@ def createWindows(scrPtr):
 def printWin(winPtr, data):
     (maxln, _) = winPtr.getmaxyx()
     winPtr.scroll(); winPtr.border(0);
-    winPtr.addstr(maxln-2, 2, repr(data), curses.A_REVERSE); winPtr.refresh()
+    winPtr.addstr(maxln-2, 2, data); winPtr.refresh()
     
 def refreshWinList(winPtr, List, winName) :
     (maxln, _) = winPtr.getmaxyx()
@@ -78,10 +78,11 @@ def handler(clientsock, addr, winE, winC):
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-def main(w) :
+if __name__=='__main__':
     #def resize_handler(signal, frame): # interrupt signal handler (ctrl+c)
     #    w.erase()
     #    w.addstr(0,0, str(w.getmaxyx()))
+    w = curses.initscr()
     w.nodelay(1); curses.curs_set(0)
     signal.signal(signal.SIGINT, interrupt_handler) # signal handler (ctrl+c)
     #signal.signal(signal.SIGWINCH, resize_handler) # signal handler (ctrl+c)
@@ -96,8 +97,4 @@ def main(w) :
         clientsock, addr = serversock.accept()
         printWin(winE, 'Connection from ' +repr(addr))
         thread.start_new_thread(handler, (clientsock, addr, winE, winC))
-
-
-if __name__=='__main__':
-     curses.wrapper(main)
 
