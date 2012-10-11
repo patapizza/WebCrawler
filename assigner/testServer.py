@@ -1,9 +1,12 @@
+#!/usr/bin/python2.7
+
 from socket import *
 import thread
 import yaml
 import curses
 import signal
 import sys
+from curses_utils import *
  
 BUFF = 1024
 HOST = '127.0.0.1'# must be input parameter @TODO
@@ -12,38 +15,6 @@ PORT = 9999 # must be input parameter @TODO
 clients = {} # client (crawler) dictionnary: socket -> addr
 global serversock
 
-
-def createWindows(scrPtr):
-    (maxln, maxcol) = scrPtr.getmaxyx()
-    vSizeE = 2*(maxln-2)/3; vSizeC = (maxln-2)/3;
-    winEvents = curses.newwin(vSizeE,maxcol,0,0); winEvents.border(0)
-    winEvents.setscrreg(2, vSizeE-2); winEvents.scrollok(True);  
-    winEvents.addstr(1, 10, 'Events', curses.A_REVERSE)
-    winEvents.refresh()    
-    
-    winCrawlers = curses.newwin(vSizeC,maxcol,vSizeE+1,0); winCrawlers.border(0); 
-    winCrawlers.addstr(1, 10, 'Crawlers', curses.A_REVERSE)
-    winCrawlers.refresh()      
-    
-    return winEvents, winCrawlers
-
-
-def printWin(winPtr, data):
-    (maxln, _) = winPtr.getmaxyx()
-    winPtr.scroll(); winPtr.border(0);
-    winPtr.addstr(maxln-2, 2, data); winPtr.refresh()
-    
-def refreshWinList(winPtr, List, winName) :
-    (maxln, _) = winPtr.getmaxyx()
-    winPtr.erase(); winPtr.border(0)
-    winPtr.addstr(1, 10, winName, curses.A_REVERSE); 
-    nbC = 0
-    for value in List :
-        if nbC == maxln-3 and len(List) > nbC :
-            winPtr.addstr(nbC+2, 2, '...'); break
-        winPtr.addstr(nbC+2, 2, repr(value)); nbC+=1
-    winPtr.refresh()
-    
 
 # interrupt signal handler (ctrl+c)
 def interrupt_handler(signal, frame): 
