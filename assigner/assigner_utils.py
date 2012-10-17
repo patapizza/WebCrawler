@@ -8,14 +8,17 @@ import os.path
 MAX_REMOTE_LIST_SIZE = 10 # number of domains that a remote crawler should manage
 SAVE_FILE = 'save.sober'
 
+def get_domains_for_remote()
+    if len(self.domains) >= MAX_REMOTE_LIST_SIZE :
+        return [select_domain() for i in range(MAX_REMOTE_LIST_SIZE - remote_list_size)]
+    else : 
+        return [select_domain()]
 
 def process_data(data, domain_manager) :
     domain, externals, remote_list_size = data
     domain_manager.update_domain(domain)
     domain_manager.update_externals(externals)
-    save_domains(domain_manager.get_domains())    
-    return [select_domain() for i in range(MAX_REMOTE_LIST_SIZE - remote_list_size)]
-
+    save_domains(domain_manager.get_domains())  
 
 def save_domains(domains) :
     f = open(SAVE_FILE,'w')
@@ -56,6 +59,9 @@ class DomManager :
     
     # currently : select the first domain not yet visited, or the last recent one
     def select_domain() :
+        if len(self.domains) == 0 : # if domains dict empty
+            return PNode("http://julien.odent.net", Page("/"))
+            
         oldest = time()
         isnew = False
         domain = None
