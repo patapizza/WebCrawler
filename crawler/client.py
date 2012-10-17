@@ -38,12 +38,13 @@ finally:
         print("Connection reset by peer")
         sys.exit(1)
     crawler = Crawler(domains, [])
-    for domain in crawler.crawl():
-        sock.sendall(yaml.dump(domain))
-        print("Sent: %s\nSent: [" % domain["domain"])
-        for external in domain["externals"]:
+    for d in crawler.crawl():
+        domain,externals,stack = d
+        sock.sendall(yaml.dump(d))
+        print("Sent: %s\nSent: [" % domain)
+        for external in externals:
             print("%s" % external)
-        print("]\nSent: %d\n" % domain["stack"])
+        print("]\nSent: %d\n" % stack)
         data = recv_data()
         if not data:
             sock.close()
