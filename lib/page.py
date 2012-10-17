@@ -16,7 +16,7 @@ class Page:
         self.links = links
 
     def get_wc(self):
-        return wc
+        return self.wc
 
     def set_wc(self, wc):
         self.wc = wc
