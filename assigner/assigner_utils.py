@@ -21,16 +21,16 @@ class DomManager :
         else  :                                         # if domain not in dict
             self.domains[domain.get_domain()] = [domain, True]
         
-    def update_externals(self, externals)
+    def update_externals(self, externals) :
         for domain in externals :
             update_domain(domain, update_timestamp=False)
     
-    
+    # currently : select the first domain not yet visited, or the last recent one
     def select_domain() :
         oldest = time()
         isnew = False
         domain = None
-        for dom, new in self.domains.values()
+        for dom, new in self.domains.values() :
             if new : 
                 domain = dom
                 isnew = True
