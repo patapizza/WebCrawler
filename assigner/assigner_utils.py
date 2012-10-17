@@ -2,12 +2,41 @@
 
 from pnode import PNode
 from time import time
+import yaml
+import os.path
+
+MAX_REMOTE_LIST_SIZE = 10 # number of domains that a remote crawler should manage
+SAVE_FILE = 'save.sober'
+
+
+def process_data(data, domain_manager) :
+    domain, externals, remote_list_size = data
+    domain_manager.update_domain(domain)
+    domain_manager.update_externals(externals)
+    save_domains(domain_manager.get_domains())    
+    return [select_domain() for i in range(MAX_REMOTE_LIST_SIZE - remote_list_size)]
+
+
+def save_domains(domains) :
+    f = open(SAVE_FILE,'w')
+    f.write(yaml.dump(domains))
+    f.close
+
 
 class DomManager :
 
-    def __init__(self, domains):
-        # dictionnary of tuples :  key:pnode.get_domain() , value:[pnode,new?]
-        self.domains = domains 
+    def __init__(self):
+        # initializes the domains dictionnary
+        # dictionnary:  key:pnode.get_domain() , value:[pnode,new?]
+        self.domains = {}
+        if os.path.exists(SAVE_FILE) :
+            f = open(SAVE_FILE,'r')
+            self.domains = yaml.load(f.read())
+            f.close()        
+            if not isinstance(self.domains, dict) :
+                print('Save file corrupted. Creating new file.', sys.stderr)
+                self.domains = {} 
+    
     
     def update_domain(self, domain, update_timestamp=True) :
         if domain.get_domain() in  self.domains.keys() : # if domain already in dict
@@ -41,4 +70,6 @@ class DomManager :
         if not isnew :
             domain.update_timestamp()        
         return domain
-        
+    
+    def get_domains() :
+        return self.domains
