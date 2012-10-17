@@ -6,18 +6,9 @@ import sys
 import time
 import yaml
 from crawler import Crawler
+from utils import recv_data
 
 HOST, PORT = "localhost", 9999
-
-def recv_data():
-    data = ''
-    recv = sock.recv(8192)
-    if not recv:
-        return None
-    while recv:
-        data = ''.join([data, recv])
-        recv = sock.recv(8192) if len(recv) == 8192 else None
-    return yaml.load(data)
 
 # signal handler (ctrl+c)
 def signal_handler(signal, frame):
@@ -32,7 +23,8 @@ try:
     sock.connect((HOST, PORT))
 finally:
     # TODO: retrieve wordlist from database
-    domains = recv_data()
+    domains = recv_data(sock)
+    print("Received: %s\n" % domains)
     if not domains:
         sock.close()
         print("Connection reset by peer")
@@ -40,12 +32,13 @@ finally:
     crawler = Crawler(domains, [])
     for d in crawler.crawl():
         domain,externals,stack = d
+        print(d)
         sock.sendall(yaml.dump(d))
         print("Sent: %s\nSent: [" % domain)
         for external in externals:
             print("%s" % external)
         print("]\nSent: %d\n" % stack)
-        data = recv_data()
+        data = recv_data(sock)
         if not data:
             sock.close()
             print("Connection reset by peer")

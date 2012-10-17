@@ -22,7 +22,7 @@ class Crawler:
         domains: a list of PNode instances
     '''
     def add_domains(self, domains):
-        self.internals.append(domains)
+        self.internals.extend(domains)
 
     def crawl(self):
         while self.internals:
@@ -45,10 +45,11 @@ class Crawler:
 
     def add_links(self, pointer, links):
         for link in links:
-            # domain = extract_domain(link)
             domain, link = extract(link)
             if domain == '':
                 domain = pointer.get_domain()
+            if not re.match(r'https?://', domain):
+                domain = ''.join(['http://', domain])
             print("domain: %s page: %s" % (domain, link))
             page = Page(link)
             ptr = None

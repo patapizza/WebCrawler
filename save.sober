@@ -1,0 +1,456 @@
+http://.//:
+- !!python/object:pnode.PNode
+  domain: http://.//
+  pages:
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - &id001 !!python/object:pnode.PNode
+    domain: http://julien.odent.net
+    pages:
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/KW9szc, '/?id=8', '/?id=8#comments',
+        twitter.com/, '/?id=7', '/?id=7#comments', twitter.com/, bit.ly/sXAUr4, '/?id=6',
+        '/?id=6#comments', twitter.com/, '/?id=5', '/?id=5#comments', twitter.com/,
+        '/?id=4', '/?id=4#comments', twitter.com/, '/?id=3', '/?id=3#comments', twitter.com/,
+        '/?id=2', '/?id=2#comments', twitter.com/, '/?id=1', '/?id=1#comments', twitter.com/,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /
+      wc: []
+    - !!python/object:page.Page
+      links: [.//, /about.php, github.com/patapizza]
+      name: /projects.php
+      wc: []
+    - !!python/object:page.Page
+      links: [.//, /projects.php, www.yanone.de/typedesign/kaffeesatz/, gucken.deviantart.com/]
+      name: /about.php
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/KW9szc, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=8
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/KW9szc, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=8#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, code.google.com/p/aima-python/, www.patapizza.be/seating_guests.tar.bz2,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=7
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, code.google.com/p/aima-python/, www.patapizza.be/seating_guests.tar.bz2,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=7#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/sXAUr4, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=6
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/sXAUr4, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=6#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, www.dangermouse.net/esoteric/piet.html, 'shakespearelang.sourceforge.net/report/shakespeare/shakespeare.html#sec:hello',
+        shakespearelang.sourceforge.net/, esolangs.org/wiki/Brainfuck, www.lscheffer.com/malbolge.shtml,
+        compsoc.dur.ac.uk/whitespace/hworld.ws, compsoc.dur.ac.uk/whitespace/, 'http://www.99-bottles-of-beer.net/',
+        www.ioccc.org/, www0.us.ioccc.org/2004/gavare.c, www0.us.ioccc.org/2001/williams.c,
+        www0.us.ioccc.org/2004/arachnid.c, www0.us.ioccc.org/2004/newbern.c, www0.us.ioccc.org/2000/dhyang.c,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=5
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, www.dangermouse.net/esoteric/piet.html, 'shakespearelang.sourceforge.net/report/shakespeare/shakespeare.html#sec:hello',
+        shakespearelang.sourceforge.net/, esolangs.org/wiki/Brainfuck, www.lscheffer.com/malbolge.shtml,
+        compsoc.dur.ac.uk/whitespace/hworld.ws, compsoc.dur.ac.uk/whitespace/, 'http://www.99-bottles-of-beer.net/',
+        www.ioccc.org/, www0.us.ioccc.org/2004/gavare.c, www0.us.ioccc.org/2001/williams.c,
+        www0.us.ioccc.org/2004/arachnid.c, www0.us.ioccc.org/2004/newbern.c, www0.us.ioccc.org/2000/dhyang.c,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=5#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=4
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=4#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=3
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=3#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=2
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=2#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, dwm.suckless.org/, www.linux.com/archive/articles/62218,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=1
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, dwm.suckless.org/, www.linux.com/archive/articles/62218,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=1#comments
+      wc: []
+    referers: []
+    timestamp: 1350484132.059718
+  timestamp: 1350484134.00781
+- true
+http://bit.ly:
+- !!python/object:pnode.PNode
+  domain: http://bit.ly
+  pages:
+  - !!python/object:page.Page
+    name: /KW9szc
+    wc: []
+  - !!python/object:page.Page
+    name: /sXAUr4
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484133.565787
+- true
+http://code.google.com:
+- !!python/object:pnode.PNode
+  domain: http://code.google.com
+  pages:
+  - !!python/object:page.Page
+    name: /p/aima-python/
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484137.095275
+- true
+http://compsoc.dur.ac.uk:
+- !!python/object:pnode.PNode
+  domain: http://compsoc.dur.ac.uk
+  pages:
+  - !!python/object:page.Page
+    name: /whitespace/hworld.ws
+    wc: []
+  - !!python/object:page.Page
+    name: /whitespace/
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484139.650886
+- true
+http://dwm.suckless.org:
+- !!python/object:pnode.PNode
+  domain: http://dwm.suckless.org
+  pages:
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484146.915051
+- true
+http://esolangs.org:
+- !!python/object:pnode.PNode
+  domain: http://esolangs.org
+  pages:
+  - !!python/object:page.Page
+    name: /wiki/Brainfuck
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484139.650762
+- true
+http://function.copy:
+- !!python/object:pnode.PNode
+  domain: http://function.copy
+  pages:
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484133.567665
+- true
+http://github.com:
+- !!python/object:pnode.PNode
+  domain: http://github.com
+  pages:
+  - !!python/object:page.Page
+    name: /patapizza
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484134.007923
+- true
+http://gucken.deviantart.com:
+- !!python/object:pnode.PNode
+  domain: http://gucken.deviantart.com
+  pages:
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484134.590489
+- true
+http://julien.odent.net:
+- *id001
+- true
+http://shakespearelang.sourceforge.net:
+- !!python/object:pnode.PNode
+  domain: http://shakespearelang.sourceforge.net
+  pages:
+  - !!python/object:page.Page
+    name: /report/shakespeare/shakespeare.html#sec:hello
+    wc: []
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484139.650622
+- true
+http://twitter.com:
+- !!python/object:pnode.PNode
+  domain: http://twitter.com
+  pages:
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484133.565966
+- true
+http://www.99-bottles-of-beer.net:
+- !!python/object:pnode.PNode
+  domain: http://www.99-bottles-of-beer.net
+  pages:
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484139.651025
+- true
+http://www.dangermouse.net:
+- !!python/object:pnode.PNode
+  domain: http://www.dangermouse.net
+  pages:
+  - !!python/object:page.Page
+    name: /esoteric/piet.html
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484139.650558
+- true
+http://www.ioccc.org:
+- !!python/object:pnode.PNode
+  domain: http://www.ioccc.org
+  pages:
+  - !!python/object:page.Page
+    name: /
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484139.651087
+- true
+http://www.linux.com:
+- !!python/object:pnode.PNode
+  domain: http://www.linux.com
+  pages:
+  - !!python/object:page.Page
+    name: /archive/articles/62218
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484146.915106
+- true
+http://www.lscheffer.com:
+- !!python/object:pnode.PNode
+  domain: http://www.lscheffer.com
+  pages:
+  - !!python/object:page.Page
+    name: /malbolge.shtml
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484139.650824
+- true
+http://www.patapizza.be:
+- !!python/object:pnode.PNode
+  domain: http://www.patapizza.be
+  pages:
+  - !!python/object:page.Page
+    name: /seating_guests.tar.bz2
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484137.09533
+- true
+http://www.yanone.de:
+- !!python/object:pnode.PNode
+  domain: http://www.yanone.de
+  pages:
+  - !!python/object:page.Page
+    name: /typedesign/kaffeesatz/
+    wc: []
+  referers:
+  - *id001
+  timestamp: 1350484134.59044
+- true
+http://www0.us.ioccc.org:
+- !!python/object:pnode.PNode
+  domain: http://www0.us.ioccc.org
+  pages:
+  - !!python/object:page.Page
+    links: []
+    name: /2004/gavare.c
+    wc: []
+  - !!python/object:page.Page
+    links: []
+    name: /2001/williams.c
+    wc: []
+  - !!python/object:page.Page
+    links: []
+    name: /2004/arachnid.c
+    wc: []
+  - !!python/object:page.Page
+    links: []
+    name: /2004/newbern.c
+    wc: []
+  - !!python/object:page.Page
+    links: []
+    name: /2000/dhyang.c
+    wc: []
+  referers:
+  - !!python/object:pnode.PNode
+    domain: http://julien.odent.net
+    pages:
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/KW9szc, '/?id=8', '/?id=8#comments',
+        twitter.com/, '/?id=7', '/?id=7#comments', twitter.com/, bit.ly/sXAUr4, '/?id=6',
+        '/?id=6#comments', twitter.com/, '/?id=5', '/?id=5#comments', twitter.com/,
+        '/?id=4', '/?id=4#comments', twitter.com/, '/?id=3', '/?id=3#comments', twitter.com/,
+        '/?id=2', '/?id=2#comments', twitter.com/, '/?id=1', '/?id=1#comments', twitter.com/,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /
+      wc: []
+    - !!python/object:page.Page
+      links: [.//, /about.php, github.com/patapizza]
+      name: /projects.php
+      wc: []
+    - !!python/object:page.Page
+      links: [.//, /projects.php, www.yanone.de/typedesign/kaffeesatz/, gucken.deviantart.com/]
+      name: /about.php
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/KW9szc, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=8
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/KW9szc, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=8#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, code.google.com/p/aima-python/, www.patapizza.be/seating_guests.tar.bz2,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=7
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, code.google.com/p/aima-python/, www.patapizza.be/seating_guests.tar.bz2,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=7#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/sXAUr4, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=6
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, bit.ly/sXAUr4, '/?id=8', '/?id=7', '/?id=6',
+        '/?id=5', '/?id=4', function.copy/]
+      name: /?id=6#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, www.dangermouse.net/esoteric/piet.html, 'shakespearelang.sourceforge.net/report/shakespeare/shakespeare.html#sec:hello',
+        shakespearelang.sourceforge.net/, esolangs.org/wiki/Brainfuck, www.lscheffer.com/malbolge.shtml,
+        compsoc.dur.ac.uk/whitespace/hworld.ws, compsoc.dur.ac.uk/whitespace/, 'http://www.99-bottles-of-beer.net/',
+        www.ioccc.org/, www0.us.ioccc.org/2004/gavare.c, www0.us.ioccc.org/2001/williams.c,
+        www0.us.ioccc.org/2004/arachnid.c, www0.us.ioccc.org/2004/newbern.c, www0.us.ioccc.org/2000/dhyang.c,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=5
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, www.dangermouse.net/esoteric/piet.html, 'shakespearelang.sourceforge.net/report/shakespeare/shakespeare.html#sec:hello',
+        shakespearelang.sourceforge.net/, esolangs.org/wiki/Brainfuck, www.lscheffer.com/malbolge.shtml,
+        compsoc.dur.ac.uk/whitespace/hworld.ws, compsoc.dur.ac.uk/whitespace/, 'http://www.99-bottles-of-beer.net/',
+        www.ioccc.org/, www0.us.ioccc.org/2004/gavare.c, www0.us.ioccc.org/2001/williams.c,
+        www0.us.ioccc.org/2004/arachnid.c, www0.us.ioccc.org/2004/newbern.c, www0.us.ioccc.org/2000/dhyang.c,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=5#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=4
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=4#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=3
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=3#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=2
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4',
+        function.copy/]
+      name: /?id=2#comments
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, dwm.suckless.org/, www.linux.com/archive/articles/62218,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=1
+      wc: []
+    - !!python/object:page.Page
+      links: [/projects.php, /about.php, dwm.suckless.org/, www.linux.com/archive/articles/62218,
+        '/?id=8', '/?id=7', '/?id=6', '/?id=5', '/?id=4', function.copy/]
+      name: /?id=1#comments
+      wc: []
+    referers: []
+    timestamp: 1350484132.059718
+  timestamp: 1350484139.651151
+- false

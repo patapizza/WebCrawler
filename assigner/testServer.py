@@ -8,6 +8,7 @@ import signal
 import sys
 from curses_utils import *
 from assigner_utils import *
+from utils import recv_data
  
 BUFF = 8096
 HOST = '127.0.0.1'# must be input parameter @TODO
@@ -18,7 +19,6 @@ global serversock
 global domain_manager 
 mutex = Lock()
 
-
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 def handler(clientsock, addr, winE, winC):
@@ -28,15 +28,14 @@ def handler(clientsock, addr, winE, winC):
         refreshWinList(winC, clients.values(), 'Crawlers')
         clientsock.send(yaml.dump(domain_manager.get_domains_for_remote(0)))
     while 1:
-        recv = clientsock.recv(BUFF)
-        if not recv:
+        data = recv_data(clientsock)
+        if not data:
             clientsock.close()
             with mutex: 
                 printWin(winE, 'Closing connection: ' + repr(addr))
                 del clients[clientsock]
                 refreshWinList(winC, clients.values(), 'Crawlers')
             break
-        data = yaml.load(recv) # YAML reassembly
         with mutex : 
             printWin(winE, 'Data RECV: ')
             domain_manager.process_data(data)

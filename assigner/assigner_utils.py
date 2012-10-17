@@ -74,8 +74,8 @@ class DomManager :
     def process_data(self, data) :
         print repr(data)
         domain, externals, _ = data
-        domain_manager.update_domain(domain)
-        domain_manager.update_externals(externals)
+        self.update_domain(domain)
+        self.update_externals(externals)
         self.save_domains()  
 
     def save_domains(self) :
