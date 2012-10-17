@@ -25,9 +25,9 @@ class Crawler:
         self.internals.append(domains)
 
     def crawl(self):
-        p = Parser(self.words)
         while self.internals:
             pnode = self.internals[0]
+            p = Parser(self.words, ''.join([pnode.get_domain(), '/robots.txt']))
             for page in pnode.get_pages():
                 p.set_url(''.join([pnode.get_domain(), page.get_name()]))
                 page.set_wc(p.get_wc())
@@ -45,13 +45,12 @@ class Crawler:
 
     def add_links(self, pointer, links):
         for link in links:
-            page = Page(link)
-
             # domain = extract_domain(link)
             domain, link = extract(link)
             if domain == '':
                 domain = pointer.get_domain()
             print("domain: %s page: %s" % (domain, link))
+            page = Page(link)
             ptr = None
             for internal in self.internals:
                 if domain == internal.get_domain():
@@ -76,7 +75,7 @@ class Crawler:
 
 def extract(link):
     # FIXME: "./" "../../../index.php3" "function.copy" (on julien.odent.net)
-    pair = re.sub(r'(https?://)?(([\w]+\.){1}(?!(html|php)$)([A-Za-z\-]+\.?)+)(/?.*)', '\\2 \\6', link).split()
+    pair = re.sub(r'(https?://)?(([\w]+\.){1}(?!(html|php|py)$)([A-Za-z\-]+\.?)+)(/?.*)', '\\2 \\6', link).split()
     if len(pair) == 2:
         domain, link = pair
     else:
@@ -84,7 +83,7 @@ def extract(link):
         if len(s) == 1:
             domain = ''
             link = s[0]
-        elif re.match(r'(html|php)', s[1]):
+        elif re.match(r'(html|php|py)', s[1]):
             domain = ''
             link = pair[0]
         else:

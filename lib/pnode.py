@@ -32,7 +32,7 @@ class PNode:
 
     def add_page(self, page):
         pages = [p.get_name() for p in self.pages]
-        if not page in set(pages):
+        if not page.get_name() in set(pages):
             self.pages.append(page)
 
     def add_referer(self, referer):

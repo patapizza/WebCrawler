@@ -40,9 +40,14 @@ class Parser:
             return ''
         request = urllib2.Request(self.url)
         request.add_header('User-agent', 'Sober')
-        response = urllib2.urlopen(request)
-        html = response.read()
-        response.close()
+        try:
+            response = urllib2.urlopen(request)
+            html = response.read()
+        except urllib2.HTTPError as e:
+            print("HTTPError: %d" % e.code)
+            html = ''
+        else:
+            response.close()
         return html
 
     # feed in a new url to parse

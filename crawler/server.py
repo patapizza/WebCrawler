@@ -101,6 +101,7 @@ if __name__=='__main__':
     while 1:
         clientsock, addr = serversock.accept()
         printWin(winE, 'Connection from ' +repr(addr))
-        clientsock.sendall(yaml.dump([PNode("http://www.google.com", Page("/")), PNode("http://www.github.com", Page("/"))]))
+        #clientsock.sendall(yaml.dump([PNode("http://www.google.com", Page("/")), PNode("http://www.github.com", Page("/"))]))
+        clientsock.sendall(yaml.dump([PNode("http://julien.odent.net", Page("/")), PNode("http://www.github.com", Page("/"))]))
         thread.start_new_thread(handler, (clientsock, addr, winE, winC))
 
