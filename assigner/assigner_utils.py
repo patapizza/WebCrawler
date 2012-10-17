@@ -1,29 +1,13 @@
 #!/usr/bin/python2.7
 
 from pnode import PNode
+from page import Page
 from time import time
 import yaml
 import os.path
 
 MAX_REMOTE_LIST_SIZE = 10 # number of domains that a remote crawler should manage
 SAVE_FILE = 'save.sober'
-
-def get_domains_for_remote()
-    if len(self.domains) >= MAX_REMOTE_LIST_SIZE :
-        return [select_domain() for i in range(MAX_REMOTE_LIST_SIZE - remote_list_size)]
-    else : 
-        return [select_domain()]
-
-def process_data(data, domain_manager) :
-    domain, externals, remote_list_size = data
-    domain_manager.update_domain(domain)
-    domain_manager.update_externals(externals)
-    save_domains(domain_manager.get_domains())  
-
-def save_domains(domains) :
-    f = open(SAVE_FILE,'w')
-    f.write(yaml.dump(domains))
-    f.close
 
 
 class DomManager :
@@ -55,10 +39,10 @@ class DomManager :
         
     def update_externals(self, externals) :
         for domain in externals :
-            update_domain(domain, update_timestamp=False)
+            self.update_domain(domain, update_timestamp=False)
     
     # currently : select the first domain not yet visited, or the last recent one
-    def select_domain() :
+    def select_domain(self) :
         if len(self.domains) == 0 : # if domains dict empty
             return PNode("http://julien.odent.net", Page("/"))
             
@@ -77,5 +61,24 @@ class DomManager :
             domain.update_timestamp()        
         return domain
     
-    def get_domains() :
+    def get_domains(self) :
         return self.domains
+                
+        
+    def get_domains_for_remote(self, remote_list_size) :
+        if len(self.domains) >= MAX_REMOTE_LIST_SIZE :
+            return [self.select_domain() for i in range(MAX_REMOTE_LIST_SIZE - remote_list_size)]
+        else : 
+            return [self.select_domain()]
+
+    def process_data(self, data) :
+        print repr(data)
+        domain, externals, _ = data
+        domain_manager.update_domain(domain)
+        domain_manager.update_externals(externals)
+        self.save_domains()  
+
+    def save_domains(self) :
+        f = open(SAVE_FILE,'w')
+        f.write(yaml.dump(self.domains))
+        f.close

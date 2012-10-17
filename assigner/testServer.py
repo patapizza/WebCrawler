@@ -26,7 +26,7 @@ def handler(clientsock, addr, winE, winC):
     with mutex : 
         clients[clientsock] = addr    
         refreshWinList(winC, clients.values(), 'Crawlers')
-        clientsock.send(yaml.dump(get_domains_for_remote()))
+        clientsock.send(yaml.dump(domain_manager.get_domains_for_remote(0)))
     while 1:
         recv = clientsock.recv(BUFF)
         if not recv:
@@ -39,8 +39,8 @@ def handler(clientsock, addr, winE, winC):
         data = yaml.load(recv) # YAML reassembly
         with mutex : 
             printWin(winE, 'Data RECV: ')
-            process_data(data, domain_manager)
-            response = get_domains_for_remote()
+            domain_manager.process_data(data)
+            response = domain_manager.get_domains_for_remote(data[2])
         clientsock.send(yaml.dump(response))
         #print 'sent:' + repr(gen_response())
 
