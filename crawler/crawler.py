@@ -31,21 +31,27 @@ class Crawler:
             for page in pnode.get_pages():
                 p.set_url(''.join([pnode.get_domain(), page.get_name()]))
                 page.set_wc(p.get_wc())
-                links = p.get_links()
+                links = [''.join(extract(link)) for link in p.get_links()]
                 page.set_links(links)
                 self.add_links(pnode, links)
             # sending pnode + externals + |internals| - 1 to server
-            d = {}
+            '''d = {}
             d["domain"] = self.internals.pop(0) # popping out pnode from internals
             d["externals"] = self.externals
             d["stack"] = len(self.internals)
-            yield d
+            yield d'''
+            yield (self.internals.pop(0), self.externals, len(self.internals))
             self.externals = [] # emptying externals
 
     def add_links(self, pointer, links):
         for link in links:
             page = Page(link)
-            domain = extract_domain(link)
+
+            # domain = extract_domain(link)
+            domain, link = extract(link)
+            if domain == '':
+                domain = pointer.get_domain()
+            print("domain: %s page: %s" % (domain, link))
             ptr = None
             for internal in self.internals:
                 if domain == internal.get_domain():
@@ -68,5 +74,22 @@ class Crawler:
     def get_internals(self):
         return self.internals
 
-def extract_domain(link):
-    return re.sub(r'(https?://)?(([\w]+\.){1}([\w]+\.?)+)/?.*', '\\2', link)
+def extract(link):
+    # FIXME: "./" "../../../index.php3" "function.copy" (on julien.odent.net)
+    pair = re.sub(r'(https?://)?(([\w]+\.){1}(?!(html|php)$)([A-Za-z\-]+\.?)+)(/?.*)', '\\2 \\6', link).split()
+    if len(pair) == 2:
+        domain, link = pair
+    else:
+        s = pair[0].split('.')
+        if len(s) == 1:
+            domain = ''
+            link = s[0]
+        elif re.match(r'(html|php)', s[1]):
+            domain = ''
+            link = pair[0]
+        else:
+            domain = pair[0]
+            link = '/'
+    if link[0] != '/':
+        link = ''.join(['/', link])
+    return (domain, link)

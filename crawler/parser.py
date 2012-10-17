@@ -30,9 +30,13 @@ class Parser:
 
     # retrieve the document
     def fetch_url(self):
-        sock = urllib2.urlopen(self.url)
-        html = sock.read()
-        sock.close()
+        # TODO: handle 403 forbidden, 404 not found, etc.
+        print("fetching: %s" % self.url)
+        request = urllib2.Request(self.url)
+        request.add_header('User-agent', 'Sober')
+        response = urllib2.urlopen(request)
+        html = response.read()
+        response.close()
         return html
 
     # feed in a new url to parse
