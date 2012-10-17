@@ -1,12 +1,16 @@
 #!/usr/bin/python2.7
 
 import re
+import robotparser
 import urllib2
 
 class Parser:
 
-    def __init__(self, words):
+    def __init__(self, words, robots_url):
         self.words = words
+        self.rp = robotparser.RobotFileParser()
+        self.rp.set_url(robots_url)
+        self.rp.read()
         self.wc = []
         self.links = []
         self.url = None
@@ -32,6 +36,8 @@ class Parser:
     def fetch_url(self):
         # TODO: handle 403 forbidden, 404 not found, etc.
         print("fetching: %s" % self.url)
+        if not self.rp.can_fetch('Sober', self.url):
+            return ''
         request = urllib2.Request(self.url)
         request.add_header('User-agent', 'Sober')
         response = urllib2.urlopen(request)
