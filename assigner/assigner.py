@@ -37,7 +37,7 @@ def handler(clientsock, addr, winE, winC):
                 refreshWinList(winC, clients.values(), 'Crawlers')
             break
         with mutex : 
-            printWin(winE, 'Data RECV: ')
+            printWin(winE, 'Data RECV: '+ data[0].get_domain())
             domain_manager.process_data(data)
             response = domain_manager.get_domains_for_remote(data[2])
         clientsock.send(yaml.dump(response))
