@@ -4,6 +4,9 @@ import re
 from page import Page
 from parser import Parser
 from pnode import PNode
+from time import time
+
+CRAWLING_DELAY = 2
 
 class Crawler:
 
@@ -29,7 +32,11 @@ class Crawler:
             pnode = self.internals[0]
             p = Parser(self.words, ''.join([pnode.get_domain(), '/robots.txt']))
             for page in pnode.get_pages():
+                if pnode.get_timestamp() >= time() - CRAWLING_DELAY:
+                    self.internals.append(pnode)
+                    break
                 p.set_url(''.join([pnode.get_domain(), page.get_name()]))
+                pnode.update_timestamp()
                 page.set_wc(p.get_wc())
                 links = [''.join(extract(link)) for link in p.get_links()]
                 page.set_links(links)
