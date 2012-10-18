@@ -25,21 +25,21 @@ class DomManager :
                 self.domains = {} 
     
     
-    def update_domain(self, domain, update_timestamp=True) :
+    def update_domain(self, domain, is_external=False) :
         if domain.get_domain() in  self.domains.keys() : # if domain already in dict
             curr_domain, _ = self.domains[domain.get_domain()]
             for page in domain.get_pages() :
                 curr_domain.add_page(page) 
             for ref in domain.get_referers() :
                 curr_domain.add_referer(ref)
-            if update_timestamp : curr_domain.update_timestamp()
+            if is_external : curr_domain.update_timestamp()
             self.domains[domain.get_domain()] = [domain, False] # domain is not new anymore
         else  :                                         # if domain not in dict
-            self.domains[domain.get_domain()] = [domain, True]
+            self.domains[domain.get_domain()] = [domain, is_external] # set new to True only for externals
         
     def update_externals(self, externals) :
         for domain in externals :
-            self.update_domain(domain, update_timestamp=False)
+            self.update_domain(domain, is_external=True)
     
     # currently : select the first domain not yet visited, or the last recent one
     def select_domain(self) :
