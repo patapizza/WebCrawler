@@ -7,7 +7,7 @@ import yaml
 import os.path
 
 MAX_REMOTE_LIST_SIZE = 10 # number of domains that a remote crawler should manage
-SAVE_FILE = 'save.sober'
+SAVE_FILE = 'sober.sav'
 
 
 class DomManager :
