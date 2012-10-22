@@ -21,27 +21,29 @@ mutex = Lock()
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-def handler(clientsock, addr, winE, winC):
+def handler(clientsock, addr, winE, winC, winI):
     global clients, domain_manager    
     with mutex : 
         clients[clientsock] = addr    
         refreshWinList(winC, clients.values(), 'Crawlers')
         clientsock.send(yaml.dump(domain_manager.get_domains_for_remote(0)))
     while 1:
-        data = recv_data(clientsock)
-        if not data:
+        data = recv_data(clientsock) # data : (domain , externals, remote_stack_size)
+        if not data: # disconnection from crawler
             clientsock.close()
             with mutex: 
                 printWin(winE, 'Closing connection: ' + repr(addr))
                 del clients[clientsock]
                 refreshWinList(winC, clients.values(), 'Crawlers')
             break
+        domain, externals, remote_stack_size = data
         with mutex : 
-            printWin(winE, 'Data RECV: '+ data[0].get_domain())
+            printWin(winE, 'Data RECV: '+ str(domain))
             domain_manager.process_data(data)
-            response = domain_manager.get_domains_for_remote(data[2])
+            refreshInfos(winI, domain_manager)
+            response = domain_manager.get_domains_for_remote(remote_stack_size)
         clientsock.send(yaml.dump(response))
-        #print 'sent:' + repr(gen_response())
+        printWin(winE, 'Sent '+ str(len(response))+' new domain(s) to '+str(clients[clientsock]))
 
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -59,7 +61,8 @@ if __name__=='__main__':
     w = curses.initscr()
     w.nodelay(1); curses.curs_set(0)
     #signal.signal(signal.SIGWINCH, resize_handler) # signal handler (ctrl+c)
-    winE, winC = createWindows(w)
+    winE, winC, winI = createWindows(w)
+    refreshInfos(winI, domain_manager)
         
     # interrupt signal handler (ctrl+c)
     def interrupt_handler(signal, frame): 
@@ -79,7 +82,7 @@ if __name__=='__main__':
     while 1:
         clientsock, addr = serversock.accept()
         printWin(winE, 'Connection from ' +repr(addr))
-        p = Process(target = handler, args = (clientsock, addr, winE, winC))
+        p = Process(target = handler, args = (clientsock, addr, winE, winC, winI))
         p.start()
         
 

@@ -29,26 +29,26 @@ class Crawler:
 
     def crawl(self):
         while self.internals:
-            pnode = self.internals[0]
+            timeout = False
+            pnode = self.internals.pop(0)
             p = Parser(self.words, ''.join([pnode.get_domain(), '/robots.txt']))
             for page in pnode.get_pages():
+                if page.get_wc():
+                    continue # skipping pages already parsed
                 if pnode.get_timestamp() >= time() - CRAWLING_DELAY:
                     self.internals.append(pnode)
+                    timeout = True
                     break
                 p.set_url(''.join([pnode.get_domain(), page.get_name()]))
                 pnode.update_timestamp()
                 page.set_wc(p.get_wc())
                 links = [''.join(extract(link)) for link in p.get_links()]
                 page.set_links(links)
-                self.add_links(pnode, links)
+                self.add_links(pnode, links)            
             # sending pnode + externals + |internals| - 1 to server
-            '''d = {}
-            d["domain"] = self.internals.pop(0) # popping out pnode from internals
-            d["externals"] = self.externals
-            d["stack"] = len(self.internals)
-            yield d'''
-            yield (self.internals.pop(0), self.externals, len(self.internals))
-            self.externals = [] # emptying externals
+            if not timeout :
+                yield (pnode, self.externals, len(self.internals))
+                self.externals = [] # emptying externals
 
     def add_links(self, pointer, links):
         for link in links:

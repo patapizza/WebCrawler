@@ -29,7 +29,7 @@ finally:
         sock.close()
         print("Connection reset by peer")
         sys.exit(1)
-    crawler = Crawler(domains, [])
+    crawler = Crawler(domains, ["prostipute"])
     for d in crawler.crawl():
         domain,externals,stack = d
         print(d)

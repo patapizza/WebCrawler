@@ -6,7 +6,7 @@ from time import time
 import yaml
 import os.path
 
-MAX_REMOTE_LIST_SIZE = 10 # number of domains that a remote crawler should manage
+MAX_REMOTE_LIST_SIZE = 100 # number of domains that a remote crawler should manage
 SAVE_FILE = 'sober.sav'
 
 
@@ -22,8 +22,7 @@ class DomManager :
             f.close()        
             if not isinstance(self.domains, dict) :
                 print('Save file corrupted. Creating new file.', sys.stderr)
-                self.domains = {} 
-    
+                self.domains = {}         
     
     def update_domain(self, domain, is_external=False) :
         if domain.get_domain() in  self.domains.keys() : # if domain already in dict
@@ -63,7 +62,12 @@ class DomManager :
     
     def get_domains(self) :
         return self.domains
-                
+
+    def get_nbVisited(self) :
+        self.nbNewDomains = 0
+        for dom, new in self.domains.values() :
+            if new : self.nbNewDomains += 1
+        return len(self.domains) - self.nbNewDomains
         
     def get_domains_for_remote(self, remote_list_size) :
         if len(self.domains) >= MAX_REMOTE_LIST_SIZE :
@@ -72,7 +76,6 @@ class DomManager :
             return [self.select_domain()]
 
     def process_data(self, data) :
-        print repr(data)
         domain, externals, _ = data
         self.update_domain(domain)
         self.update_externals(externals)
